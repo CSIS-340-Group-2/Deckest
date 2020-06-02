@@ -4,17 +4,16 @@ project(
   default_options: ['cpp_std=c++17']
 )
 
+cmake = import('cmake')
+
 gtkmm = dependency('gtkmm-3.0')
 sqlite3 = dependency('sqlite3')
-# Sqlite_orm is header-only, so we don't need a dep up here.
-# We'll just get it from a submodule include
+
+sqliteorm_proj = cmake.subproject('sqlite_orm')
+sqliteorm = sqliteorm_proj.dependency('sqlite_orm')
 
 srcs = [
   'src/main.cpp'
 ]
 
-includes = [
-  include_directories('thirdparty/sqlite_orm/include/sqlite_orm/')
-]
-
-executable('deckest', srcs, include_directories: includes, dependencies: [gtkmm, sqlite3])
+executable('deckest', srcs, dependencies: [gtkmm, sqlite3, sqliteorm])

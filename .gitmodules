@@ -1,3 +1,6 @@
 [submodule "thirdparty/sqlite_orm"]
 	path = thirdparty/sqlite_orm
 	url = https://github.com/fnc12/sqlite_orm
+[submodule "subprojects/sqlite_orm"]
+	path = subprojects/sqlite_orm
+	url = https://github.com/fnc12/sqlite_orm
