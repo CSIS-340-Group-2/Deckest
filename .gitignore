@@ -1,3 +1,5 @@
+ui/*~
+db.sqlite
 .clangd/
 build/
 compile_commands.json
