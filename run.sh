@@ -3,6 +3,8 @@
 
 . ./env.sh
 
+clang-format -i src/*.*pp
+
 if ! stat ./build >/dev/null; then
 	meson build
 fi
