@@ -1,7 +1,7 @@
 #!/bin/bash
 # Only for MSYS2
 
-./env.sh
+. ./env.sh
 
 if ! stat ./build >/dev/null; then
 	meson build
