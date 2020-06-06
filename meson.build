@@ -9,7 +9,11 @@ sqlite3 = dependency('sqlite3')
 
 
 srcs = [
-  'src/main.cpp'
+  'src/main.cpp',
+  'src/decks.cpp',
+  'src/materials.cpp',
+  'src/employees.cpp',
+  'src/about.cpp',
 ]
 
 includes = [

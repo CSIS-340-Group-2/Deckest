@@ -5,6 +5,8 @@
 
 #include "sqlite_orm/sqlite_orm.h"
 
+#include "creation_callbacks.hpp"
+
 using namespace std;
 using namespace sqlite_orm;
 
@@ -49,11 +51,7 @@ int main(int argc, char** argv) {
       // Every page's root is a Gtk::Alignment
       // For each file:
       // // The root is a Gtk::Grid
-      set_page(notebook, DECKS_PAGE, "ui/decks.glade", [](Gtk::Builder* root) {
-        Gtk::Button* btn;
-        root->get_widget("button", btn);
-        btn->signal_clicked().connect([]() { cerr << "Hello, world!\n"; });
-      });
+      set_page(notebook, DECKS_PAGE, "ui/decks.glade", create_decks);
     }
     return app->run(*win);
   } catch (Gtk::BuilderError& e) { cerr << e.what() << std::endl; }
