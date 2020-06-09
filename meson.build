@@ -14,6 +14,7 @@ srcs = [
   'src/materials.cpp',
   'src/employees.cpp',
   'src/about.cpp',
+  'src/db.cpp',
 ]
 
 includes = [

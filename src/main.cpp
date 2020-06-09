@@ -10,17 +10,13 @@
 using namespace std;
 using namespace sqlite_orm;
 
-struct Deck {};
-
-struct Material {};
-
-struct Employee {};
-
 // Keep these synced with main.glade
 constexpr int DECKS_PAGE = 0, MATERIALS_PAGE = 1, EMPLOYEES_PAGE = 2, ABOUT_PAGE = 3;
 
 /**
- * Set a notebook's page based on a template from a file
+ * Set a notebook's page based on a template from a file.
+ * The file must contain a Gtk::Grid named root somewhere in it. That is what will
+ * get placed into notebook page n.
  */
 void set_page(Gtk::Notebook* notebook, int n, const char* filename,
               std::function<void(Gtk::Builder*)> init) {
