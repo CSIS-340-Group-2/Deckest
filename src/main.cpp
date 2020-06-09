@@ -20,10 +20,13 @@ constexpr int DECKS_PAGE = 0, MATERIALS_PAGE = 1, EMPLOYEES_PAGE = 2, ABOUT_PAGE
  */
 void set_page(Gtk::Notebook* notebook, int n, const char* filename,
               std::function<void(Gtk::Builder*)> init) {
-  auto builder = Gtk::Builder::create_from_file(filename, "root");
+  auto builder = Gtk::Builder::create_from_file(filename);
   init(builder.get());
+  
   Gtk::Grid* grid;
   builder->get_widget("root", grid);
+
+  grid->unparent();
 
   auto page = dynamic_cast<Gtk::Alignment*>(notebook->get_nth_page(0));
   page->add(*grid);
