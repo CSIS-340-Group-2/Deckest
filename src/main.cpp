@@ -24,7 +24,7 @@ constexpr int DECKS_PAGE = 0, MATERIALS_PAGE = 1, EMPLOYEES_PAGE = 2, ABOUT_PAGE
  */
 void set_page(Gtk::Notebook* notebook, int n, const char* filename,
               std::function<void(Gtk::Builder*)> init) {
-  auto builder = Gtk::Builder::create_from_file("ui/decks.glade", "root");
+  auto builder = Gtk::Builder::create_from_file(filename, "root");
   init(builder.get());
   Gtk::Grid* grid;
   builder->get_widget("root", grid);
