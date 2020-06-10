@@ -17,6 +17,14 @@ std::vector<Material> DB::get_materials() { return DB::get_db().get_all<Material
 std::vector<Employee> DB::get_employees() { return DB::get_db().get_all<Employee>(); }
 std::vector<Deck>     DB::get_decks() { return DB::get_db().get_all<Deck>(); }
 
+std::vector<Material> get_mats_of_kind(const std::string& kind) {
+  return DB::get_db().get_all<Material>(where(is_equal(&Material::kind, kind)));
+}
+
+std::vector<Material> get_mats_of_type(const std::string& type) {
+  return DB::get_db().get_all<Material>(where(is_equal(&Material::type, type)));
+}
+
 std::vector<Order> Material::orders() {
   return DB::get_db().get_all<Order>(where(is_equal(&Order::matID, this->id)));
 }
