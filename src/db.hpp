@@ -86,7 +86,33 @@ struct DB {
         make_column("length", &Deck::length),
         make_column("width", &Deck::width),
         make_column("height", &Deck::height)
-      )
+      ), 
+	make_table("Employee", 
+		make_column("id", &Employee::id, autoincrement(), primary_key()),
+		make_column("firstName", &Employee::firstName),
+		make_column("lastName", &Employee::lastName),
+		make_column("wages", &Employee::wages),
+		make_column("phone", &Employee::phone)
+	),
+	make_table("Work",
+		make_column("deckID", &Work::deckID),
+		make_column("empID", &Work::empID),
+		make_column("hours", &Work::hours)
+	),
+	make_table("Order",
+		make_column("deckID", &Order::deckID),
+		make_column("matID", &Order::matID),
+		make_column("quantity", &Order::quantity)
+	),
+	make_table("Material", 
+		make_column("id", &Material::id, autoincrement(), primary_key()),
+		make_column("pricePerUnit", &Material::pricePerUnit),
+		make_column("type", &Material::type),
+		make_column("kind", &Material::kind),
+		make_column("length", &Material::length),
+		make_column("width", &Material::width),
+		make_column("height", &Material::height)
+	)
     );
     // clang-format on
     return storage;
