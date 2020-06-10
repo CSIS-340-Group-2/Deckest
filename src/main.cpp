@@ -6,6 +6,7 @@
 #include "sqlite_orm/sqlite_orm.h"
 
 #include "creation_callbacks.hpp"
+#include "db.hpp"
 
 using namespace std;
 using namespace sqlite_orm;
@@ -34,7 +35,8 @@ void set_page(Gtk::Notebook* notebook, int n, const char* filename,
 
 int main(int argc, char** argv) {
   try {
-    auto storage = make_storage("db.sqlite");
+    auto& storage = DB::get_db();
+    storage.sync_schema();
 
     auto app     = Gtk::Application::create(argc, argv, "edu.mnstate.DeckEst");
     auto builder = Gtk::Builder::create_from_file("ui/main.glade");
