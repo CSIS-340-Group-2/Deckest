@@ -44,8 +44,15 @@ class DB {
  private:
   static auto make_db() {
     using namespace sqlite_orm;
-    // return make_storage("deckest.db",
-    //   make_table("...")
-    // );
+    return make_storage("deckest.db",
+      make_table("deck",
+        make_column("id", &Deck::id, autoincrement(), primary_key()),
+        make_column("name", &Deck::name),
+        make_column("color", &Deck::color),
+        make_column("length", &Deck::length),
+        make_column("width", &Deck::width),
+        make_column("height", &Deck::height)
+      )
+    );
   }
 };
