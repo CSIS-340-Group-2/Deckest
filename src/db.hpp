@@ -5,6 +5,8 @@
 
 // unique_ptrs are used to indicate nullability.
 
+struct Order;
+struct Work;
 
 struct Material {
   int    id;
@@ -18,6 +20,7 @@ struct Material {
   std::unique_ptr<double> length, width, height;
 
   void update();
+  std::vector<Order> orders();
 };
 
 struct Order {
@@ -32,6 +35,8 @@ struct Deck {
   double      length, width, height;
   
   void update();
+  std::vector<Order> orders();
+  std::vector<Work> works();
 };
 
 struct Work {
@@ -47,6 +52,7 @@ struct Employee {
   std::unique_ptr<std::string> phone;
   
   void update();
+  std::vector<Work> works();
 };
 
 struct DB {
@@ -55,14 +61,6 @@ struct DB {
   static std::vector<Deck>     get_decks();
   static std::vector<Material> get_materials();
   static std::vector<Employee> get_employees();
-
-  static std::vector<Order> get_orders_for(int deckID);
-  static std::vector<Order> get_orders_of(int matID);
-
-  
-  static std::vector<Work>  get_working_on(int deckID);
-  static std::vector<Work>  get_jobs(int empID);
-
 
   static std::vector<Material> get_mats_of_kind(const std::string& kind);
   static std::vector<Material> get_mats_of_type(const std::string& type);
