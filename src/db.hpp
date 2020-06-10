@@ -17,6 +17,8 @@ struct Material {
       /// What is it made out of? If misc: What's its name
       kind;
 
+  // TODO: Replace these. The client says we can optimize it down to discrete lengths 
+  // and widthxheight combos.
   std::unique_ptr<double> length, width, height;
 
   void               update();
