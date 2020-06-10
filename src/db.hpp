@@ -95,12 +95,16 @@ struct DB {
     	make_table("Work",
     		make_column("deckID", &Work::deckID),
     		make_column("empID", &Work::empID),
-    		make_column("hours", &Work::hours)
+    		make_column("hours", &Work::hours),
+		foreign_key(&Work::deckID).references(&Deck::id),
+		foreign_key(&Work::empID).references(&Employee::id)
     	),
     	make_table("Order",
     		make_column("deckID", &Order::deckID),
     		make_column("matID", &Order::matID),
-    		make_column("quantity", &Order::quantity)
+    		make_column("quantity", &Order::quantity),
+		foreign_key(&Order::deckID).references(&Deck::id),
+		foreign_key(&Order::matID).references(&Material::id)
     	),
     	make_table("Material", 
     		make_column("id", &Material::id, autoincrement(), primary_key()),
