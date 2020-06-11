@@ -2,43 +2,104 @@
 <!-- Generated with glade 3.36.0 -->
 <interface>
   <requires lib="gtk+" version="3.22"/>
-  <object class="GtkListStore" id="deckListModel">
-    <columns>
-      <!-- column-name deckName -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">Deck1</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">Deck2</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">Deck 34</col>
-      </row>
-    </data>
-  </object>
   <object class="GtkWindow">
     <property name="can_focus">False</property>
     <child>
       <object class="GtkGrid" id="root">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
         <child>
           <object class="GtkGrid">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Name</property>
+                <property name="single_line_mode">True</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans Bold Oblique 10"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">0</property>
+                <property name="width">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Length</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans Bold Oblique 10"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">1</property>
+                <property name="width">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Width</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans Bold Oblique 10"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">2</property>
+                <property name="width">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Height</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans Bold Oblique 10"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">3</property>
+                <property name="width">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Color</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans Bold Oblique 10"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">4</property>
+                <property name="width">2</property>
+              </packing>
+            </child>
             <child>
               <object class="GtkEntry" id="nameInput">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="tooltip_text" translatable="yes">The name of the deck</property>
                 <property name="hexpand">True</property>
-                <property name="input_purpose">name</property>
+                <property name="input_purpose">number</property>
               </object>
               <packing>
-                <property name="left_attach">2</property>
+                <property name="left_attach">3</property>
                 <property name="top_attach">0</property>
               </packing>
             </child>
@@ -49,7 +110,7 @@
                 <property name="input_purpose">number</property>
               </object>
               <packing>
-                <property name="left_attach">2</property>
+                <property name="left_attach">3</property>
                 <property name="top_attach">1</property>
               </packing>
             </child>
@@ -60,7 +121,7 @@
                 <property name="input_purpose">number</property>
               </object>
               <packing>
-                <property name="left_attach">2</property>
+                <property name="left_attach">3</property>
                 <property name="top_attach">2</property>
               </packing>
             </child>
@@ -71,7 +132,7 @@
                 <property name="input_purpose">number</property>
               </object>
               <packing>
-                <property name="left_attach">2</property>
+                <property name="left_attach">3</property>
                 <property name="top_attach">3</property>
               </packing>
             </child>
@@ -83,62 +144,7 @@
                 <property name="title" translatable="yes">Pick a Deck Color</property>
               </object>
               <packing>
-                <property name="left_attach">2</property>
-                <property name="top_attach">4</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Name</property>
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Length</property>
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Width</property>
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">2</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Height</property>
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">3</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Color</property>
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
+                <property name="left_attach">3</property>
                 <property name="top_attach">4</property>
               </packing>
             </child>
@@ -151,7 +157,7 @@
                 <property name="draw_indicator">True</property>
               </object>
               <packing>
-                <property name="left_attach">1</property>
+                <property name="left_attach">3</property>
                 <property name="top_attach">5</property>
               </packing>
             </child>
@@ -164,9 +170,30 @@
                 <property name="draw_indicator">True</property>
               </object>
               <packing>
-                <property name="left_attach">1</property>
+                <property name="left_attach">3</property>
                 <property name="top_attach">6</property>
               </packing>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
             </child>
             <child>
               <placeholder/>
@@ -194,7 +221,9 @@
             <property name="hexpand">True</property>
             <property name="vexpand">True</property>
             <property name="model">deckListModel</property>
+            <property name="search_column">0</property>
             <property name="fixed_height_mode">True</property>
+            <property name="enable_grid_lines">vertical</property>
             <child internal-child="selection">
               <object class="GtkTreeSelection"/>
             </child>
@@ -235,5 +264,22 @@
     <child type="titlebar">
       <placeholder/>
     </child>
+  </object>
+  <object class="GtkListStore" id="deckListModel">
+    <columns>
+      <!-- column-name deckName -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">Deck1</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Deck2</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Deck 34</col>
+      </row>
+    </data>
   </object>
 </interface>
