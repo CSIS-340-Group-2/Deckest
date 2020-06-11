@@ -1,5 +1,6 @@
 ui/*~
 db.sqlite
+deckest.db
 .clangd/
 build/
 compile_commands.json
