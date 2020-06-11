@@ -8,6 +8,57 @@
 struct Order;
 struct Work;
 
+
+enum class Size : int {
+  S2x4,
+  S2x2,
+  S2x8,
+  S4x6,
+  S2x12,
+  S4x4,
+  /// 5/4 x 6
+  S5_4x6,
+
+  /// Never to be instantiated. Just here for row_extractor
+  MAX
+};
+
+// Bind Size into sqlite_orm
+// This kind of ugliness is why I'm writing Ligi.
+namespace sqlite_orm {
+template<>
+struct type_printer<Size>: public integer_printer {};
+
+template<>
+struct statement_binder<Size> {
+  int bind(sqlite3_stmt* stmt, int index, const Size& val) {
+    return statement_binder<int>().bind(stmt, index, (int)val);
+  }
+};
+
+template<>
+struct field_printer<Size> {
+  int operator()(const Size& val) const { return (int)val; }
+};
+
+template<>
+struct row_extractor<Size> {
+  Size extract(int rowVal) {
+    if (rowVal < (int)Size::MAX and rowVal > 0)
+      return (Size)rowVal;
+    else
+      throw new std::runtime_error("Incorrect Size value in DB!");
+  }
+
+  Size extract(sqlite3_stmt* stmt, int colIndex) {
+    auto val = sqlite3_column_int(stmt, colIndex);
+    return this->extract(val);
+  }
+};
+
+};  // namespace sqlite_orm
+
+
 struct Material {
   int    id;
   double pricePerUnit;
@@ -17,9 +68,11 @@ struct Material {
       /// What is it made out of? If misc: What's its name
       kind;
 
-  // TODO: Replace these. The client says we can optimize it down to discrete lengths 
-  // and widthxheight combos.
-  std::unique_ptr<double> length, width, height;
+  // These two are for boards and the like
+
+  /// One of the discrete lengths 6/8/10/12
+  std::unique_ptr<int>  length;
+  std::unique_ptr<Size> size;
 
   void               update();
   std::vector<Order> orders();
@@ -114,8 +167,7 @@ struct DB {
         make_column("type", &Material::type),
         make_column("kind", &Material::kind),
         make_column("length", &Material::length),
-        make_column("width", &Material::width),
-        make_column("height", &Material::height)
+        make_column("size", &Material::size)
       )
     );
     // clang-format on
