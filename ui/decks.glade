@@ -26,116 +26,164 @@
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <child>
-          <object class="GtkEntry" id="nameInput">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="tooltip_text" translatable="yes">The name of the deck</property>
-            <property name="hexpand">True</property>
-            <property name="input_purpose">name</property>
-          </object>
-          <packing>
-            <property name="left_attach">2</property>
-            <property name="top_attach">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkEntry" id="lengthInput">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="input_purpose">number</property>
-          </object>
-          <packing>
-            <property name="left_attach">2</property>
-            <property name="top_attach">1</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkEntry" id="widthInput">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="input_purpose">number</property>
-          </object>
-          <packing>
-            <property name="left_attach">2</property>
-            <property name="top_attach">2</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkEntry" id="heightInput">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="input_purpose">number</property>
-          </object>
-          <packing>
-            <property name="left_attach">2</property>
-            <property name="top_attach">3</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkColorButton" id="deckColor">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <property name="title" translatable="yes">Pick a Deck Color</property>
-          </object>
-          <packing>
-            <property name="left_attach">2</property>
-            <property name="top_attach">4</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel">
+          <object class="GtkGrid">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Name</property>
+            <child>
+              <object class="GtkEntry" id="nameInput">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="tooltip_text" translatable="yes">The name of the deck</property>
+                <property name="hexpand">True</property>
+                <property name="input_purpose">name</property>
+              </object>
+              <packing>
+                <property name="left_attach">2</property>
+                <property name="top_attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="lengthInput">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="input_purpose">number</property>
+              </object>
+              <packing>
+                <property name="left_attach">2</property>
+                <property name="top_attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="widthInput">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="input_purpose">number</property>
+              </object>
+              <packing>
+                <property name="left_attach">2</property>
+                <property name="top_attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="heightInput">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="input_purpose">number</property>
+              </object>
+              <packing>
+                <property name="left_attach">2</property>
+                <property name="top_attach">3</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkColorButton" id="deckColor">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="title" translatable="yes">Pick a Deck Color</property>
+              </object>
+              <packing>
+                <property name="left_attach">2</property>
+                <property name="top_attach">4</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Name</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Length</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Width</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Height</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">3</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Color</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">4</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="hasRailing">
+                <property name="label" translatable="yes">Has Railing</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="draw_indicator">True</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">5</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="hasStairs">
+                <property name="label" translatable="yes">Has Stairs?</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="draw_indicator">True</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">6</property>
+              </packing>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
           </object>
           <packing>
             <property name="left_attach">1</property>
             <property name="top_attach">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Length</property>
-          </object>
-          <packing>
-            <property name="left_attach">1</property>
-            <property name="top_attach">1</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Width</property>
-          </object>
-          <packing>
-            <property name="left_attach">1</property>
-            <property name="top_attach">2</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Height</property>
-          </object>
-          <packing>
-            <property name="left_attach">1</property>
-            <property name="top_attach">3</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Color</property>
-          </object>
-          <packing>
-            <property name="left_attach">1</property>
-            <property name="top_attach">4</property>
           </packing>
         </child>
         <child>
@@ -143,6 +191,8 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="tooltip_text" translatable="yes">Select a deck to edit</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
             <property name="model">deckListModel</property>
             <property name="fixed_height_mode">True</property>
             <child internal-child="selection">
@@ -178,33 +228,6 @@
           <packing>
             <property name="left_attach">0</property>
             <property name="top_attach">0</property>
-            <property name="height">6</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkCheckButton" id="hasStairs">
-            <property name="label" translatable="yes">Has Stairs?</property>
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">False</property>
-            <property name="draw_indicator">True</property>
-          </object>
-          <packing>
-            <property name="left_attach">2</property>
-            <property name="top_attach">5</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkCheckButton" id="hasRailing">
-            <property name="label" translatable="yes">Has Railing</property>
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">False</property>
-            <property name="draw_indicator">True</property>
-          </object>
-          <packing>
-            <property name="left_attach">1</property>
-            <property name="top_attach">5</property>
           </packing>
         </child>
       </object>
