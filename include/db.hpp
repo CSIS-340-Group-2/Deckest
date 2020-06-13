@@ -88,7 +88,7 @@ struct Deck {
   int         id;
   std::string name, color;
   double      length, width, height;
-
+  bool hasRail, hasStairs;
   void               update();
   std::vector<Order> orders();
   std::vector<Work>  works();
@@ -132,13 +132,16 @@ struct DB {
     using namespace sqlite_orm;
     // clang-format off
     static auto storage = make_storage("deckest.db",
-      make_table("deck",
+      make_table("Deck",
         make_column("id", &Deck::id, autoincrement(), primary_key()),
         make_column("name", &Deck::name),
         make_column("color", &Deck::color),
         make_column("length", &Deck::length),
         make_column("width", &Deck::width),
-        make_column("height", &Deck::height)
+        make_column("height", &Deck::height),
+        make_column("hasRail", &Deck::hasRail),
+        make_column("hasStairs", &Deck::hasStairs)
+        
       ), 
       make_table("Employee", 
         make_column("id", &Employee::id, autoincrement(), primary_key()),
