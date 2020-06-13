@@ -3,6 +3,7 @@
 #include "db.hpp"
 
 #include <iostream>
+#include <optional>
 
 using namespace std;
 
@@ -21,12 +22,24 @@ class DeckCols: public Gtk::ListStore::ColumnRecord {
   }
 };
 
+template<typename T>
+std::optional<double> parse_double(const T& input) {
+  std::optional<double> res;
+  try {
+    res = std::stod(input);
+  } catch(std::exception& e) {}
+
+  return res;
+}
+
 void create_decks(Gtk::Builder* builder) {
   Gtk::TreeView*    deckList;
   Gtk::Entry *      nameInput, *lengthInput, *widthInput, *heightInput;
   Gtk::CheckButton *hasRailing, *hasStairs;
   Gtk::ColorButton* deckColor;
+  Gtk::Button* addBtn;
 
+  builder->get_widget("addDecks", addBtn);
   builder->get_widget("deckList", deckList);
   builder->get_widget("nameInput", nameInput);
   builder->get_widget("lengthInput", lengthInput);
@@ -49,91 +62,103 @@ void create_decks(Gtk::Builder* builder) {
   auto            model = Gtk::ListStore::create(cols);
   deckList->set_model(model);
 
-  // Needs to be extracted so we can call it when the deck name changes
   auto reset_decklist = [=]() {
-    // Preserve the currently selected item
-    auto curSel = deckList->get_selection()->get_selected();
-
     auto decks = DB::get_decks();
     for (auto deck : decks) {
       auto row          = *model->append();
       row[cols.colID]   = deck.id;
       row[cols.colName] = deck.name;
     }
-
-    deckList->get_selection()->select(curSel);
   };
+
   reset_decklist();
+
+  auto get_selected = [=]() {
+    std::optional<Deck> res;
+    auto sel = deckList->get_selection()->get_selected();
+    if(sel) {
+      res = DB::get_deck(sel->get_value(cols.colID));
+    }
+
+    return res;
+  };
 
   // deckList handlers
   deckList->get_selection()->signal_changed().connect([=]() {
-    auto                selected = deckList->get_selection()->get_selected();
-    Gtk::TreeModel::Row row      = *selected;
-    std::string         deckName;
-    int                 deckID;
-    row->get_value(0, deckName);
-    row->get_value(1, deckID);
+    auto                selected = get_selected();
+    if(!selected.has_value()) return;
 
-    cerr << "Selected deck " << deckName << ", retrieving...\n";
+    
+    cerr << "Selected deck " << selected->name << ", retrieving...\n";
 
-    Deck deck = DB::get_deck(deckID);
-
-    nameInput->set_text(deck.name);
-    lengthInput->set_text(std::to_string(deck.length));
-    widthInput->set_text(std::to_string(deck.width));
-    heightInput->set_text(std::to_string(deck.height));
-    deckColor->set_color(Gdk::Color(deck.color));
-    cerr << "Color: " << deckColor->get_color().to_string() << std::endl;
+    nameInput->set_text(selected->name);
+    lengthInput->set_text(std::to_string(selected->length));
+    widthInput->set_text(std::to_string(selected->width));
+    heightInput->set_text(std::to_string(selected->height));
+    deckColor->set_color(Gdk::Color(selected->color));
   });
 
   // Input handlers
 
   nameInput->signal_changed().connect([=]() {
-    auto sel = deckList->get_selection()->get_selected();
-    if (!sel) return;
-
-    auto deck = DB::get_deck(sel->get_value(cols.colID));
-
-    deck.name = nameInput->get_text();
+    auto deck = get_selected();
+    if(!deck.has_value()) return;
+    
+    deck->name = nameInput->get_text();
     // Update the decklist entry
-    sel->set_value(cols.colName, deck.name);
+    auto sel = deckList->get_selection()->get_selected();
+    sel->set_value(cols.colName, deck->name);
 
-    deck.update();
+    deck->update();
   });
 
   lengthInput->signal_changed().connect([=]() {
-    auto sel = deckList->get_selection()->get_selected();
-    if (!sel) return;
-    auto deck = DB::get_deck(sel->get_value(cols.colID));
-    try {
-      deck.length = std::stod(lengthInput->get_text());
-    } catch (std::exception& e) {}
-    deck.update();
+    auto deck = get_selected();
+    if(!deck.has_value()) return;
+
+    auto val = parse_double(lengthInput->get_text());
+    if(val.has_value()) {
+      deck->length = val.value();
+      deck->update();
+    }
   });
   widthInput->signal_changed().connect([=]() {
-    auto sel = deckList->get_selection()->get_selected();
-    if (!sel) return;
-    auto deck  = DB::get_deck(sel->get_value(cols.colID));
-    deck.width = std::stod(widthInput->get_text());
-    try {
-      deck.width = std::stod(widthInput->get_text());
-    } catch (std::exception& e) {}
-    deck.update();
+    auto deck = get_selected();
+    if(!deck.has_value()) return;
+    
+    auto val = parse_double(widthInput->get_text());
+    if(val.has_value()) {
+      deck->length = val.value();
+      deck->update();
+    }
   });
   heightInput->signal_changed().connect([=]() {
-    auto sel = deckList->get_selection()->get_selected();
-    if (!sel) return;
-    auto deck = DB::get_deck(sel->get_value(cols.colID));
-    try {
-      deck.height = std::stod(heightInput->get_text());
-    } catch (std::exception& e) {}
-    deck.update();
+    auto deck = get_selected();
+    if(!deck.has_value()) return;
+    auto val = parse_double(heightInput->get_text());
+    if(val.has_value()) {
+      deck->length = val.value();
+      deck->update();
+    }
   });
   deckColor->signal_color_set().connect([=]() {
-    auto sel = deckList->get_selection()->get_selected();
-    if (!sel) return;
-    auto deck  = DB::get_deck(sel->get_value(cols.colID));
-    deck.color = deckColor->get_color().to_string();
-    deck.update();
+    auto deck = get_selected();
+    if(!deck.has_value()) return;
+    deck->color = deckColor->get_color().to_string();
+    deck->update();
+  });
+
+  addBtn->signal_clicked().connect([=]() {
+    Deck newDeck;
+    newDeck.id = -1;
+    newDeck.name = "New Deck";
+    newDeck.length = 10;
+    newDeck.width = 10;
+    newDeck.height = 6;
+    newDeck.color = "#ff0000";
+    newDeck.hasRail = true;
+    newDeck.hasStairs = true;
+    newDeck.update();
+    reset_decklist();
   });
 }
