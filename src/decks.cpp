@@ -64,6 +64,7 @@ void create_decks(Gtk::Builder* builder) {
 
   auto reset_decklist = [=]() {
     auto decks = DB::get_decks();
+    model->clear();
     for (auto deck : decks) {
       auto row          = *model->append();
       row[cols.colID]   = deck.id;
@@ -149,16 +150,9 @@ void create_decks(Gtk::Builder* builder) {
   });
 
   addBtn->signal_clicked().connect([=]() {
-    Deck newDeck;
-    newDeck.id = -1;
-    newDeck.name = "New Deck";
-    newDeck.length = 10;
-    newDeck.width = 10;
-    newDeck.height = 6;
-    newDeck.color = "#ff0000";
-    newDeck.hasRail = true;
-    newDeck.hasStairs = true;
-    newDeck.update();
-    reset_decklist();
+    auto newDeck = DB::new_deck();
+    auto newRow = *model->append();
+    newRow.set_value(cols.colName, newDeck.name);
+    newRow.set_value(cols.colID, newDeck.id);
   });
 }

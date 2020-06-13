@@ -128,6 +128,12 @@ struct DB {
   static Work     get_work(int id);
   static Employee get_employee(int id);
 
+  static Deck new_deck();
+  static Employee new_employee();
+  static Material new_material();
+  static Work new_work(int empID, int deckID);
+  static Order new_order(int matID, int deckID);
+
   static auto& get_db() {
     using namespace sqlite_orm;
     // clang-format off
