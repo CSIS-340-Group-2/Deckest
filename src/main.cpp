@@ -23,7 +23,7 @@ void set_page(Gtk::Notebook* notebook, int n, const char* filename,
               std::function<void(Gtk::Builder*)> init) {
   auto builder = Gtk::Builder::create_from_file(filename);
   init(builder.get());
-  
+
   Gtk::Grid* grid;
   builder->get_widget("root", grid);
 
