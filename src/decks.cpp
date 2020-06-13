@@ -27,7 +27,7 @@ std::optional<double> parse_double(const T& input) {
   std::optional<double> res;
   try {
     res = std::stod(input);
-  } catch(std::exception& e) {}
+  } catch (std::exception& e) {}
 
   return res;
 }
@@ -37,7 +37,7 @@ void create_decks(Gtk::Builder* builder) {
   Gtk::Entry *      nameInput, *lengthInput, *widthInput, *heightInput;
   Gtk::CheckButton *hasRailing, *hasStairs;
   Gtk::ColorButton* deckColor;
-  Gtk::Button* addBtn;
+  Gtk::Button*      addBtn;
 
   builder->get_widget("addDecks", addBtn);
   builder->get_widget("deckList", deckList);
@@ -76,20 +76,18 @@ void create_decks(Gtk::Builder* builder) {
 
   auto get_selected = [=]() {
     std::optional<Deck> res;
-    auto sel = deckList->get_selection()->get_selected();
-    if(sel) {
-      res = DB::get_deck(sel->get_value(cols.colID));
-    }
+    auto                sel = deckList->get_selection()->get_selected();
+    if (sel) { res = DB::get_deck(sel->get_value(cols.colID)); }
 
     return res;
   };
 
   // deckList handlers
   deckList->get_selection()->signal_changed().connect([=]() {
-    auto                selected = get_selected();
-    if(!selected.has_value()) return;
+    auto selected = get_selected();
+    if (!selected.has_value()) return;
 
-    
+
     cerr << "Selected deck " << selected->name << ", retrieving...\n";
 
     nameInput->set_text(selected->name);
@@ -97,14 +95,16 @@ void create_decks(Gtk::Builder* builder) {
     widthInput->set_text(std::to_string(selected->width));
     heightInput->set_text(std::to_string(selected->height));
     deckColor->set_color(Gdk::Color(selected->color));
+    hasStairs->set_active(selected->hasStairs);
+    hasRailing->set_active(selected->hasRail);
   });
 
   // Input handlers
 
   nameInput->signal_changed().connect([=]() {
     auto deck = get_selected();
-    if(!deck.has_value()) return;
-    
+    if (!deck.has_value()) return;
+
     deck->name = nameInput->get_text();
     // Update the decklist entry
     auto sel = deckList->get_selection()->get_selected();
@@ -115,43 +115,57 @@ void create_decks(Gtk::Builder* builder) {
 
   lengthInput->signal_changed().connect([=]() {
     auto deck = get_selected();
-    if(!deck.has_value()) return;
+    if (!deck.has_value()) return;
 
     auto val = parse_double(lengthInput->get_text());
-    if(val.has_value()) {
+    if (val.has_value()) {
       deck->length = val.value();
       deck->update();
     }
   });
   widthInput->signal_changed().connect([=]() {
     auto deck = get_selected();
-    if(!deck.has_value()) return;
-    
+    if (!deck.has_value()) return;
+
     auto val = parse_double(widthInput->get_text());
-    if(val.has_value()) {
+    if (val.has_value()) {
       deck->length = val.value();
       deck->update();
     }
   });
   heightInput->signal_changed().connect([=]() {
     auto deck = get_selected();
-    if(!deck.has_value()) return;
+    if (!deck.has_value()) return;
     auto val = parse_double(heightInput->get_text());
-    if(val.has_value()) {
+    if (val.has_value()) {
       deck->length = val.value();
       deck->update();
     }
   });
   deckColor->signal_color_set().connect([=]() {
     auto deck = get_selected();
-    if(!deck.has_value()) return;
+    if (!deck.has_value()) return;
     deck->color = deckColor->get_color().to_string();
+    deck->update();
+  });
+
+  hasRailing->signal_toggled().connect([=]() {
+    auto deck = get_selected();
+    if (!deck.has_value()) return;
+    deck->hasRail = hasRailing->get_active();
+    deck->update();
+  });
+
+  hasStairs->signal_toggled().connect([=]() {
+    auto deck = get_selected();
+    if (!deck.has_value()) return;
+    deck->hasStairs = hasStairs->get_active();
     deck->update();
   });
 
   addBtn->signal_clicked().connect([=]() {
     auto newDeck = DB::new_deck();
-    auto newRow = *model->append();
+    auto newRow  = *model->append();
     newRow.set_value(cols.colName, newDeck.name);
     newRow.set_value(cols.colID, newDeck.id);
   });
