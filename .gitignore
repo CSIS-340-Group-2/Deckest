@@ -1,3 +1,4 @@
+.vscode/
 ui/*~
 db.sqlite
 deckest.db
