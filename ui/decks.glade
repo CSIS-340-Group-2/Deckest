@@ -2,23 +2,6 @@
 <!-- Generated with glade 3.36.0 -->
 <interface>
   <requires lib="gtk+" version="3.22"/>
-  <object class="GtkListStore" id="deckListModel">
-    <columns>
-      <!-- column-name deckName -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">Deck1</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">Deck2</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">Deck 34</col>
-      </row>
-    </data>
-  </object>
   <object class="GtkWindow">
     <property name="can_focus">False</property>
     <child>
@@ -238,7 +221,6 @@
             <property name="tooltip_text" translatable="yes">Select a deck to edit</property>
             <property name="hexpand">True</property>
             <property name="vexpand">True</property>
-            <property name="model">deckListModel</property>
             <property name="search_column">0</property>
             <property name="fixed_height_mode">True</property>
             <property name="enable_grid_lines">vertical</property>
@@ -257,12 +239,9 @@
                     <property name="xpad">2</property>
                     <property name="ypad">2</property>
                     <property name="xalign">0</property>
-                    <property name="background_gdk">#000000000000</property>
                     <property name="ellipsize">end</property>
                     <property name="font">Normal</property>
                     <property name="wrap_mode">word</property>
-                    <property name="background_rgba">rgba(0,0,0,0)</property>
-                    <property name="foreground_rgba">rgba(0,0,0,0)</property>
                     <property name="max_width_chars">0</property>
                   </object>
                   <attributes>
