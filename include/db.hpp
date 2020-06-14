@@ -89,6 +89,7 @@ struct Deck {
   std::string name, color;
   double      length, width, height;
   bool hasRail, hasStairs;
+  int angle;
   void               update();
   std::vector<Order> orders();
   std::vector<Work>  works();
@@ -146,7 +147,8 @@ struct DB {
         make_column("width", &Deck::width),
         make_column("height", &Deck::height),
         make_column("hasRail", &Deck::hasRail),
-        make_column("hasStairs", &Deck::hasStairs)
+        make_column("hasStairs", &Deck::hasStairs),
+        make_column("angle", &Deck::angle)
         
       ), 
       make_table("Employee", 

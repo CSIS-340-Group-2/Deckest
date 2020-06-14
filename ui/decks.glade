@@ -176,6 +176,31 @@
               </packing>
             </child>
             <child>
+              <object class="GtkComboBoxText" id="angle">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="active">0</property>
+                <items>
+                  <item id="0" translatable="yes">0</item>
+                  <item id="45" translatable="yes">45</item>
+                  <item id="90" translatable="yes">90</item>
+                </items>
+              </object>
+              <packing>
+                <property name="left_attach">3</property>
+                <property name="top_attach">7</property>
+              </packing>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
               <placeholder/>
             </child>
             <child>

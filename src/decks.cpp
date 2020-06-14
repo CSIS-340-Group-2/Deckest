@@ -38,6 +38,7 @@ void create_decks(Gtk::Builder* builder) {
   Gtk::CheckButton *hasRailing, *hasStairs;
   Gtk::ColorButton* deckColor;
   Gtk::Button*      addBtn;
+  Gtk::ComboBox*    angle;
 
   builder->get_widget("addDecks", addBtn);
   builder->get_widget("deckList", deckList);
@@ -48,7 +49,7 @@ void create_decks(Gtk::Builder* builder) {
   builder->get_widget("deckColor", deckColor);
   builder->get_widget("hasRailing", hasRailing);
   builder->get_widget("hasStairs", hasStairs);
-
+  builder->get_widget("angle", angle);
   // Steps from here:
   // Populate the deckList
   // Setup handlers for the deckList to automatically pull data into the inputs
@@ -97,6 +98,7 @@ void create_decks(Gtk::Builder* builder) {
     deckColor->set_color(Gdk::Color(selected->color));
     hasStairs->set_active(selected->hasStairs);
     hasRailing->set_active(selected->hasRail);
+    angle->set_active_id(std::to_string(selected->angle));
   });
 
   // Input handlers
@@ -160,6 +162,13 @@ void create_decks(Gtk::Builder* builder) {
     auto deck = get_selected();
     if (!deck.has_value()) return;
     deck->hasStairs = hasStairs->get_active();
+    deck->update();
+  });
+
+  angle->signal_changed().connect([=]() {
+    auto deck = get_selected();
+    if (!deck.has_value()) return;
+    deck->angle = std::stoi(angle->get_active_id());
     deck->update();
   });
 

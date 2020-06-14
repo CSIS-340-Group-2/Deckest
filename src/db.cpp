@@ -12,8 +12,8 @@ void Employee::update() { DB::get_db().replace(*this); }
 Material DB::get_material(int id) { return DB::get_db().get<Material>(id); }
 Deck     DB::get_deck(int id) { return DB::get_db().get<Deck>(id); }
 Employee DB::get_employee(int id) { return DB::get_db().get<Employee>(id); }
-Order DB::get_order(int id) { return DB::get_db().get<Order>(id); }
-Work DB::get_work(int id) { return DB::get_db().get<Work>(id); }
+Order    DB::get_order(int id) { return DB::get_db().get<Order>(id); }
+Work     DB::get_work(int id) { return DB::get_db().get<Work>(id); }
 
 std::vector<Material> DB::get_materials() { return DB::get_db().get_all<Material>(); }
 std::vector<Employee> DB::get_employees() { return DB::get_db().get_all<Employee>(); }
@@ -53,6 +53,7 @@ Deck DB::new_deck() {
     .height    = 6,
     .hasRail   = true,
     .hasStairs = true,
+    .angle     = 0,
   };
 
   return DB::get_deck(DB::get_db().insert(newDeck));
