@@ -37,10 +37,11 @@ void create_decks(Gtk::Builder* builder) {
   Gtk::Entry *      nameInput, *lengthInput, *widthInput, *heightInput;
   Gtk::CheckButton *hasRailing, *hasStairs;
   Gtk::ColorButton* deckColor;
-  Gtk::Button*      addBtn;
+  Gtk::Button*      addBtn, *delBtn;
   Gtk::ComboBox*    angle;
 
   builder->get_widget("addDecks", addBtn);
+  builder->get_widget("delDecks", delBtn);
   builder->get_widget("deckList", deckList);
   builder->get_widget("nameInput", nameInput);
   builder->get_widget("lengthInput", lengthInput);
@@ -177,5 +178,11 @@ void create_decks(Gtk::Builder* builder) {
     auto newRow  = *model->append();
     newRow.set_value(cols.colName, newDeck.name);
     newRow.set_value(cols.colID, newDeck.id);
+  });
+  delBtn->signal_clicked().connect([=]() {
+    auto deck = get_selected();
+    if (!deck.has_value()) return;
+    deck->remove();
+    reset_decklist();
   });
 }

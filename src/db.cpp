@@ -8,6 +8,12 @@ void Deck::update() { DB::get_db().replace(*this); }
 void Work::update() { DB::get_db().replace(*this); }
 void Employee::update() { DB::get_db().replace(*this); }
 
+void Deck::remove() { DB::get_db().remove<Deck>(this->id); }
+void Material::remove() { DB::get_db().remove<Material>(this->id); }
+// These 2 are TODO
+//void Order::remove() { DB::get_db().remove<Order>(*this); }
+//void Work::remove() { DB::get_db().remove<Work>(*this); }
+void Employee::remove() { DB::get_db().remove<Employee>(this->id); }
 
 Material DB::get_material(int id) { return DB::get_db().get<Material>(id); }
 Deck     DB::get_deck(int id) { return DB::get_db().get<Deck>(id); }

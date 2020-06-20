@@ -75,6 +75,7 @@ struct Material {
   std::unique_ptr<Size> size;
 
   void               update();
+  void               remove();
   std::vector<Order> orders();
 };
 
@@ -82,15 +83,17 @@ struct Order {
   int deckID, matID, quantity;
 
   void update();
+  void remove();
 };
 
 struct Deck {
-  int         id;
-  std::string name, color;
-  double      length, width, height;
-  bool hasRail, hasStairs;
-  int angle;
+  int                id;
+  std::string        name, color;
+  double             length, width, height;
+  bool               hasRail, hasStairs;
+  int                angle;
   void               update();
+  void               remove();
   std::vector<Order> orders();
   std::vector<Work>  works();
 };
@@ -99,6 +102,7 @@ struct Work {
   int deckID, empID, hours;
 
   void update();
+  void remove();
 };
 
 struct Employee {
@@ -108,6 +112,7 @@ struct Employee {
   std::unique_ptr<std::string> phone;
 
   void              update();
+  void              remove();
   std::vector<Work> works();
 };
 
@@ -129,11 +134,11 @@ struct DB {
   static Work     get_work(int id);
   static Employee get_employee(int id);
 
-  static Deck new_deck();
+  static Deck     new_deck();
   static Employee new_employee();
   static Material new_material();
-  static Work new_work(int empID, int deckID);
-  static Order new_order(int matID, int deckID);
+  static Work     new_work(int empID, int deckID);
+  static Order    new_order(int matID, int deckID);
 
   static auto& get_db() {
     using namespace sqlite_orm;
