@@ -37,7 +37,7 @@ void create_decks(Gtk::Builder* builder) {
   Gtk::Entry *      nameInput, *lengthInput, *widthInput, *heightInput;
   Gtk::CheckButton *hasRailing, *hasStairs;
   Gtk::ColorButton* deckColor;
-  Gtk::Button*      addBtn, *delBtn;
+  Gtk::Button*      addBtn, *delBtn, *estBtn;
   Gtk::ComboBox*    angle;
 
   builder->get_widget("addDecks", addBtn);
@@ -51,6 +51,7 @@ void create_decks(Gtk::Builder* builder) {
   builder->get_widget("hasRailing", hasRailing);
   builder->get_widget("hasStairs", hasStairs);
   builder->get_widget("angle", angle);
+  builder->get_widget("estBtn", estBtn);
   // Steps from here:
   // Populate the deckList
   // Setup handlers for the deckList to automatically pull data into the inputs
@@ -184,5 +185,11 @@ void create_decks(Gtk::Builder* builder) {
     if (!deck.has_value()) return;
     deck->remove();
     reset_decklist();
+  });
+  estBtn->signal_clicked().connect([=]() {
+    auto deck = get_selected();
+    if (!deck.has_value()) return;
+    auto builder = Gtk::Builder::create_from_file("ui/estimator.glade");
+    create_estimator(builder.get(), deck->id);
   });
 }

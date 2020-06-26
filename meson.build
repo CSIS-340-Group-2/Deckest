@@ -13,6 +13,7 @@ srcs = [
   'src/decks.cpp',
   'src/materials.cpp',
   'src/employees.cpp',
+  'src/estimator_ui.cpp',
   'src/about.cpp',
   'src/db.cpp',
 ]
