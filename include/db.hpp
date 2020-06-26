@@ -8,8 +8,40 @@
 struct Order;
 struct Work;
 
+// Bind enums into sqlite_orm
+// This kind of ugliness is why I'm writing Ligi.
+#define BIND_ENUM(E) \
+namespace sqlite_orm { \
+template<> \
+struct type_printer<E>: public integer_printer {}; \
+template<> \
+struct statement_binder<E> { \
+  int bind(sqlite3_stmt* stmt, int index, const E& val) { \
+    return statement_binder<int>().bind(stmt, index, (int)val); \
+  } \
+}; \
+template<> \
+struct field_printer<E> { \
+  int operator()(const E& val) const { return (int)val; } \
+}; \
+template<> \
+struct row_extractor<E> { \
+  E extract(int rowVal) { \
+    if (rowVal < (int)E::_MAX and rowVal > 0) \
+      return (E)rowVal; \
+    else \
+      throw new std::runtime_error("Incorrect value in DB!"); \
+  } \
+  E extract(sqlite3_stmt* stmt, int colIndex) { \
+    auto val = sqlite3_column_int(stmt, colIndex); \
+    return this->extract(val); \
+  } \
+}; \
+};  // namespace sqlite_orm
+
 
 enum class Size : int {
+  Null,
   S2x4,
   S2x2,
   S2x8,
@@ -20,59 +52,40 @@ enum class Size : int {
   S5_4x6,
 
   /// Never to be instantiated. Just here for row_extractor
-  MAX
+  _MAX
+};
+BIND_ENUM(Size)
+
+enum class ComponentType : int {
+  Board,
+  Nail,
+  Misc,
+
+  
+  _MAX
+};
+BIND_ENUM(ComponentType)
+
+struct WoodType {
+  int id;
+  std::string name, desc;
+  double pricePerBF;
 };
 
-// Bind Size into sqlite_orm
-// This kind of ugliness is why I'm writing Ligi.
-namespace sqlite_orm {
-template<>
-struct type_printer<Size>: public integer_printer {};
-
-template<>
-struct statement_binder<Size> {
-  int bind(sqlite3_stmt* stmt, int index, const Size& val) {
-    return statement_binder<int>().bind(stmt, index, (int)val);
-  }
-};
-
-template<>
-struct field_printer<Size> {
-  int operator()(const Size& val) const { return (int)val; }
-};
-
-template<>
-struct row_extractor<Size> {
-  Size extract(int rowVal) {
-    if (rowVal < (int)Size::MAX and rowVal > 0)
-      return (Size)rowVal;
-    else
-      throw new std::runtime_error("Incorrect Size value in DB!");
-  }
-
-  Size extract(sqlite3_stmt* stmt, int colIndex) {
-    auto val = sqlite3_column_int(stmt, colIndex);
-    return this->extract(val);
-  }
-};
-
-};  // namespace sqlite_orm
-
-
-struct Material {
+struct Component {
   int    id;
   double pricePerUnit;
-  std::string
-      /// Is it a board/nail/baluster/misc/etc?
-      type,
-      /// What is it made out of? If misc: What's its name
-      kind;
+
+  ComponentType type;
+
+  /// Only needed for misc
+  std::string name;
 
   // These two are for boards and the like
 
   /// One of the discrete lengths 6/8/10/12
-  std::unique_ptr<int>  length;
-  std::unique_ptr<Size> size;
+  int  length;
+  Size size;
 
   void               update();
   void               remove();
@@ -120,25 +133,28 @@ struct DB {
   //
 
   static std::vector<Deck>     get_decks();
-  static std::vector<Material> get_materials();
+  static std::vector<Component> get_materials();
   static std::vector<Employee> get_employees();
+  static std::vector<WoodType> get_woodtypes();
 
-  static std::vector<Material> get_mats_of_kind(const std::string& kind);
-  static std::vector<Material> get_mats_of_type(const std::string& type);
+  static std::vector<Component> get_mats_of_kind(const std::string& kind);
+  static std::vector<Component> get_mats_of_type(const std::string& type);
 
 
-  static Material get_material(int id);
+  static Component get_material(int id);
   static Order    get_order(int id);
   static Deck     get_deck(int id);
   // I've solved unemployment!
   static Work     get_work(int id);
   static Employee get_employee(int id);
+  static WoodType get_woodtype(int id);
 
   static Deck     new_deck();
   static Employee new_employee();
-  static Material new_material();
+  static Component new_material();
   static Work     new_work(int empID, int deckID);
   static Order    new_order(int matID, int deckID);
+  static WoodType new_woodtype();
 
   static auto& get_db() {
     using namespace sqlite_orm;
@@ -175,15 +191,21 @@ struct DB {
         make_column("matID", &Order::matID),
         make_column("quantity", &Order::quantity),
         foreign_key(&Order::deckID).references(&Deck::id),
-        foreign_key(&Order::matID).references(&Material::id)
+        foreign_key(&Order::matID).references(&Component::id)
       ),
-      make_table("Material", 
-        make_column("id", &Material::id, autoincrement(), primary_key()),
-        make_column("pricePerUnit", &Material::pricePerUnit),
-        make_column("type", &Material::type),
-        make_column("kind", &Material::kind),
-        make_column("length", &Material::length),
-        make_column("size", &Material::size)
+      make_table("Component", 
+        make_column("id", &Component::id, autoincrement(), primary_key()),
+        make_column("pricePerUnit", &Component::pricePerUnit),
+        make_column("type", &Component::type),
+        make_column("name", &Component::name),
+        make_column("length", &Component::length),
+        make_column("size", &Component::size)
+      ),
+      make_table("WoodType",
+        make_column("id", &WoodType::id, primary_key()),
+        make_column("name", &WoodType::name),
+        make_column("desc", &WoodType::desc),
+        make_column("pricePerBF", &WoodType::pricePerBF)
       )
     );
     // clang-format on

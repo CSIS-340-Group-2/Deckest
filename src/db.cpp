@@ -2,38 +2,36 @@
 
 using namespace sqlite_orm;
 
-void Material::update() { DB::get_db().replace(*this); }
+void Component::update() { DB::get_db().replace(*this); }
 void Order::update() { DB::get_db().replace(*this); }
 void Deck::update() { DB::get_db().replace(*this); }
 void Work::update() { DB::get_db().replace(*this); }
 void Employee::update() { DB::get_db().replace(*this); }
 
 void Deck::remove() { DB::get_db().remove<Deck>(this->id); }
-void Material::remove() { DB::get_db().remove<Material>(this->id); }
+void Component::remove() { DB::get_db().remove<Component>(this->id); }
 // These 2 are TODO
-//void Order::remove() { DB::get_db().remove<Order>(*this); }
-//void Work::remove() { DB::get_db().remove<Work>(*this); }
+// void Order::remove() { DB::get_db().remove<Order>(*this); }
+// void Work::remove() { DB::get_db().remove<Work>(*this); }
 void Employee::remove() { DB::get_db().remove<Employee>(this->id); }
 
-Material DB::get_material(int id) { return DB::get_db().get<Material>(id); }
-Deck     DB::get_deck(int id) { return DB::get_db().get<Deck>(id); }
-Employee DB::get_employee(int id) { return DB::get_db().get<Employee>(id); }
-Order    DB::get_order(int id) { return DB::get_db().get<Order>(id); }
-Work     DB::get_work(int id) { return DB::get_db().get<Work>(id); }
+Component DB::get_material(int id) { return DB::get_db().get<Component>(id); }
+Deck      DB::get_deck(int id) { return DB::get_db().get<Deck>(id); }
+Employee  DB::get_employee(int id) { return DB::get_db().get<Employee>(id); }
+Order     DB::get_order(int id) { return DB::get_db().get<Order>(id); }
+Work      DB::get_work(int id) { return DB::get_db().get<Work>(id); }
+WoodType  DB::get_woodtype(int id) { return DB::get_db().get<WoodType>(id); }
 
-std::vector<Material> DB::get_materials() { return DB::get_db().get_all<Material>(); }
-std::vector<Employee> DB::get_employees() { return DB::get_db().get_all<Employee>(); }
-std::vector<Deck>     DB::get_decks() { return DB::get_db().get_all<Deck>(); }
+std::vector<Component> DB::get_materials() { return DB::get_db().get_all<Component>(); }
+std::vector<Employee>  DB::get_employees() { return DB::get_db().get_all<Employee>(); }
+std::vector<Deck>      DB::get_decks() { return DB::get_db().get_all<Deck>(); }
+std::vector<WoodType>  DB::get_woodtypes() { return DB::get_db().get_all<WoodType>(); }
 
-std::vector<Material> get_mats_of_kind(const std::string& kind) {
-  return DB::get_db().get_all<Material>(where(is_equal(&Material::kind, kind)));
+std::vector<Component> get_mats_of_type(const ComponentType& type) {
+  return DB::get_db().get_all<Component>(where(is_equal(&Component::type, type)));
 }
 
-std::vector<Material> get_mats_of_type(const std::string& type) {
-  return DB::get_db().get_all<Material>(where(is_equal(&Material::type, type)));
-}
-
-std::vector<Order> Material::orders() {
+std::vector<Order> Component::orders() {
   return DB::get_db().get_all<Order>(where(is_equal(&Order::matID, this->id)));
 }
 
@@ -74,15 +72,15 @@ Employee DB::new_employee() {
   };
   return DB::get_employee(DB::get_db().insert(newEmployee));
 }
-Material DB::new_material() {
-  Material newMaterial = { .id           = -1,
-                           .pricePerUnit = 0,
-                           .type         = "Misc",
-                           .kind         = "New Material",
-                           .length       = nullptr,
-                           .size         = nullptr };
+Component DB::new_material() {
+  Component newComponent = { .id           = -1,
+                             .pricePerUnit = 0,
+                             .type         = ComponentType::Misc,
+                             .name         = "New Material",
+                             .length       = -1,
+                             .size         = Size::Null };
 
-  return DB::get_material(DB::get_db().insert(newMaterial));
+  return DB::get_material(DB::get_db().insert(newComponent));
 }
 Work DB::new_work(int empID, int deckID) {
   Work newWork = { .deckID = deckID, .empID = empID, .hours = 0 };
@@ -91,4 +89,13 @@ Work DB::new_work(int empID, int deckID) {
 Order DB::new_order(int matID, int deckID) {
   Order newOrder = { .deckID = deckID, .matID = matID, .quantity = 0 };
   return DB::get_order(DB::get_db().insert(newOrder));
+}
+WoodType DB::new_woodtype() {
+  WoodType newWoodType = {
+    .id = -1,
+    .name = "New WoodType",
+    .desc = "Complete me!",
+    .pricePerBF = 0.0
+  };
+  return DB::get_woodtype(DB::get_db().insert(newWoodType));
 }
