@@ -71,6 +71,7 @@ BIND_ENUM(Length)
 enum class ComponentType : int {
   Board,
   Nail,
+  Concrete,
   Misc,
 
   _MAX
