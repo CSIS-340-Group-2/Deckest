@@ -29,7 +29,7 @@ void set_page(Gtk::Notebook* notebook, int n, const char* filename,
 
   grid->unparent();
 
-  auto page = dynamic_cast<Gtk::Alignment*>(notebook->get_nth_page(0));
+  auto page = dynamic_cast<Gtk::Alignment*>(notebook->get_nth_page(n));
   page->add(*grid);
 }
 
@@ -53,6 +53,7 @@ int main(int argc, char** argv) {
       // For each file:
       // // The root is a Gtk::Grid
       set_page(notebook, DECKS_PAGE, "ui/decks.glade", create_decks);
+      set_page(notebook, MATERIALS_PAGE, "ui/materials.glade", create_materials);
     }
     return app->run(*win);
   } catch (Gtk::BuilderError& e) { cerr << e.what() << std::endl; }
