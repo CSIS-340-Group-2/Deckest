@@ -77,7 +77,7 @@ Component DB::new_material() {
                              .pricePerUnit = 0,
                              .type         = ComponentType::Misc,
                              .name         = "New Material",
-                             .length       = -1,
+                             .length       = Length::Null,
                              .size         = Size::Null };
 
   return DB::get_material(DB::get_db().insert(newComponent));
@@ -91,11 +91,7 @@ Order DB::new_order(int matID, int deckID) {
   return DB::get_order(DB::get_db().insert(newOrder));
 }
 WoodType DB::new_woodtype() {
-  WoodType newWoodType = {
-    .id = -1,
-    .name = "New WoodType",
-    .desc = "Complete me!",
-    .pricePerBF = 0.0
-  };
+  WoodType newWoodType
+      = { .id = -1, .name = "New WoodType", .desc = "Complete me!", .pricePerBF = 0.0 };
   return DB::get_woodtype(DB::get_db().insert(newWoodType));
 }
