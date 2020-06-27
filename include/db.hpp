@@ -10,34 +10,34 @@ struct Work;
 
 // Bind enums into sqlite_orm
 // This kind of ugliness is why I'm writing Ligi.
-#define BIND_ENUM(E) \
-namespace sqlite_orm { \
-template<> \
-struct type_printer<E>: public integer_printer {}; \
-template<> \
-struct statement_binder<E> { \
-  int bind(sqlite3_stmt* stmt, int index, const E& val) { \
-    return statement_binder<int>().bind(stmt, index, (int)val); \
-  } \
-}; \
-template<> \
-struct field_printer<E> { \
-  int operator()(const E& val) const { return (int)val; } \
-}; \
-template<> \
-struct row_extractor<E> { \
-  E extract(int rowVal) { \
-    if (rowVal < (int)E::_MAX and rowVal > 0) \
-      return (E)rowVal; \
-    else \
-      throw new std::runtime_error("Incorrect value in DB!"); \
-  } \
-  E extract(sqlite3_stmt* stmt, int colIndex) { \
-    auto val = sqlite3_column_int(stmt, colIndex); \
-    return this->extract(val); \
-  } \
-}; \
-};  // namespace sqlite_orm
+#define BIND_ENUM(E)                                                                               \
+  namespace sqlite_orm {                                                                           \
+    template<>                                                                                     \
+    struct type_printer<E>: public integer_printer {};                                             \
+    template<>                                                                                     \
+    struct statement_binder<E> {                                                                   \
+      int bind(sqlite3_stmt* stmt, int index, const E& val) {                                      \
+        return statement_binder<int>().bind(stmt, index, (int)val);                                \
+      }                                                                                            \
+    };                                                                                             \
+    template<>                                                                                     \
+    struct field_printer<E> {                                                                      \
+      int operator()(const E& val) const { return (int)val; }                                      \
+    };                                                                                             \
+    template<>                                                                                     \
+    struct row_extractor<E> {                                                                      \
+      E extract(int rowVal) {                                                                      \
+        if (rowVal < (int)E::_MAX and rowVal > 0)                                                  \
+          return (E)rowVal;                                                                        \
+        else                                                                                       \
+          throw new std::runtime_error("Incorrect value in DB!");                                  \
+      }                                                                                            \
+      E extract(sqlite3_stmt* stmt, int colIndex) {                                                \
+        auto val = sqlite3_column_int(stmt, colIndex);                                             \
+        return this->extract(val);                                                                 \
+      }                                                                                            \
+    };                                                                                             \
+  };  // namespace sqlite_orm
 
 
 enum class Size : int {
@@ -57,11 +57,12 @@ enum class Size : int {
 BIND_ENUM(Size)
 
 enum class Length : int {
-  Null = 0,
-  Six = 6,
-  Eight = 8,
-  Ten = 10,
-  Twelve = 12,
+  Null     = 0,
+  Six      = 6,
+  Eight    = 8,
+  Ten      = 10,
+  Twelve   = 12,
+  Baluster = 42,
 
   _MAX,
 };
@@ -70,17 +71,17 @@ BIND_ENUM(Length)
 enum class ComponentType : int {
   Board,
   Nail,
+  Concrete,
   Misc,
 
-  
   _MAX
 };
 BIND_ENUM(ComponentType)
 
 struct WoodType {
-  int id;
+  int         id;
   std::string name, desc;
-  double pricePerBF;
+  double      pricePerBF;
 };
 
 struct Component {
@@ -94,7 +95,7 @@ struct Component {
 
   // These two are for boards and the like
   Length length;
-  Size size;
+  Size   size;
 
   void               update();
   void               remove();
@@ -138,32 +139,39 @@ struct Employee {
   std::vector<Work> works();
 };
 
+/// Just used to store global prices for certain things
+struct CommonComps {
+  ComponentType type;
+  double        avgPricePerUnit;
+};
+
 struct DB {
   //
 
-  static std::vector<Deck>     get_decks();
+  static std::vector<Deck>      get_decks();
   static std::vector<Component> get_materials();
-  static std::vector<Employee> get_employees();
-  static std::vector<WoodType> get_woodtypes();
+  static std::vector<Employee>  get_employees();
+  static std::vector<WoodType>  get_woodtypes();
 
   static std::vector<Component> get_mats_of_kind(const std::string& kind);
   static std::vector<Component> get_mats_of_type(const std::string& type);
 
 
   static Component get_material(int id);
-  static Order    get_order(int id);
-  static Deck     get_deck(int id);
+  static Order     get_order(int id);
+  static Deck      get_deck(int id);
   // I've solved unemployment!
-  static Work     get_work(int id);
-  static Employee get_employee(int id);
-  static WoodType get_woodtype(int id);
-
-  static Deck     new_deck();
-  static Employee new_employee();
+  static Work      get_work(int id);
+  static Employee  get_employee(int id);
+  static WoodType  get_woodtype(int id);
+  static double    get_avgprice(ComponentType ty);
+  static void      set_avgprice(ComponentType ty, double price);
+  static Deck      new_deck();
+  static Employee  new_employee();
   static Component new_material();
-  static Work     new_work(int empID, int deckID);
-  static Order    new_order(int matID, int deckID);
-  static WoodType new_woodtype();
+  static Work      new_work(int empID, int deckID);
+  static Order     new_order(int matID, int deckID);
+  static WoodType  new_woodtype();
 
   static auto& get_db() {
     using namespace sqlite_orm;
@@ -215,6 +223,10 @@ struct DB {
         make_column("name", &WoodType::name),
         make_column("desc", &WoodType::desc),
         make_column("pricePerBF", &WoodType::pricePerBF)
+      ),
+      make_table("CommonComps",
+        make_column("type", &CommonComps::type, primary_key()),
+        make_column("avgPricePerUnit", &CommonComps::avgPricePerUnit)
       )
     );
     // clang-format on
