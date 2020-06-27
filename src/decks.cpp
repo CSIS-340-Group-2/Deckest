@@ -37,7 +37,7 @@ void create_decks(Gtk::Builder* builder) {
   Gtk::Entry *      nameInput, *lengthInput, *widthInput, *heightInput;
   Gtk::CheckButton *hasRailing, *hasStairs;
   Gtk::ColorButton* deckColor;
-  Gtk::Button*      addBtn, *delBtn, *estBtn;
+  Gtk::Button *     addBtn, *delBtn, *estBtn;
   Gtk::ComboBox*    angle;
 
   builder->get_widget("addDecks", addBtn);

@@ -7,6 +7,7 @@ void Order::update() { DB::get_db().replace(*this); }
 void Deck::update() { DB::get_db().replace(*this); }
 void Work::update() { DB::get_db().replace(*this); }
 void Employee::update() { DB::get_db().replace(*this); }
+void WoodType::update() { DB::get_db().replace(*this); }
 
 void Deck::remove() { DB::get_db().remove<Deck>(this->id); }
 void Component::remove() { DB::get_db().remove<Component>(this->id); }
@@ -14,27 +15,32 @@ void Component::remove() { DB::get_db().remove<Component>(this->id); }
 // void Order::remove() { DB::get_db().remove<Order>(*this); }
 // void Work::remove() { DB::get_db().remove<Work>(*this); }
 void Employee::remove() { DB::get_db().remove<Employee>(this->id); }
+void WoodType::remove() { DB::get_db().remove<WoodType>(this->id); }
 
-Component DB::get_material(int id) { return DB::get_db().get<Component>(id); }
+Component DB::get_component(int id) { return DB::get_db().get<Component>(id); }
 Deck      DB::get_deck(int id) { return DB::get_db().get<Deck>(id); }
 Employee  DB::get_employee(int id) { return DB::get_db().get<Employee>(id); }
 Order     DB::get_order(int id) { return DB::get_db().get<Order>(id); }
 Work      DB::get_work(int id) { return DB::get_db().get<Work>(id); }
 WoodType  DB::get_woodtype(int id) { return DB::get_db().get<WoodType>(id); }
 double    DB::get_avgprice(ComponentType ty) {
-  return DB::get_db().select(&CommonComps::avgPricePerUnit, where(c(&CommonComps::type) == ty))[0];
+  auto results
+      = DB::get_db().select(&CommonComps::avgPricePerUnit, where(c(&CommonComps::type) == ty));
+  if (results.size() > 0)
+    return results[0];
+  else
+    return 0.0;
 }
 void DB::set_avgprice(ComponentType ty, double price) {
-  DB::get_db().update_all(set(c(&CommonComps::avgPricePerUnit) = price),
-                          where(c(&CommonComps::type) == ty));
+  DB::get_db().replace(CommonComps{ ty, price });
 }
 
-std::vector<Component> DB::get_materials() { return DB::get_db().get_all<Component>(); }
+std::vector<Component> DB::get_components() { return DB::get_db().get_all<Component>(); }
 std::vector<Employee>  DB::get_employees() { return DB::get_db().get_all<Employee>(); }
 std::vector<Deck>      DB::get_decks() { return DB::get_db().get_all<Deck>(); }
 std::vector<WoodType>  DB::get_woodtypes() { return DB::get_db().get_all<WoodType>(); }
 
-std::vector<Component> get_mats_of_type(const ComponentType& type) {
+std::vector<Component> DB::get_comps_of_type(ComponentType type) {
   return DB::get_db().get_all<Component>(where(is_equal(&Component::type, type)));
 }
 
@@ -79,7 +85,7 @@ Employee DB::new_employee() {
   };
   return DB::get_employee(DB::get_db().insert(newEmployee));
 }
-Component DB::new_material() {
+Component DB::new_component() {
   Component newComponent = { .id           = -1,
                              .pricePerUnit = 0,
                              .type         = ComponentType::Misc,
@@ -87,7 +93,7 @@ Component DB::new_material() {
                              .length       = Length::Null,
                              .size         = Size::Null };
 
-  return DB::get_material(DB::get_db().insert(newComponent));
+  return DB::get_component(DB::get_db().insert(newComponent));
 }
 Work DB::new_work(int empID, int deckID) {
   Work newWork = { .deckID = deckID, .empID = empID, .hours = 0 };

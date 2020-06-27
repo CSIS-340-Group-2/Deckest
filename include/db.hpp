@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <iostream>
 
 #include "sqlite_orm/sqlite_orm.h"
 
@@ -27,10 +28,10 @@ struct Work;
     template<>                                                                                     \
     struct row_extractor<E> {                                                                      \
       E extract(int rowVal) {                                                                      \
-        if (rowVal < (int)E::_MAX and rowVal > 0)                                                  \
+        if (rowVal < (int)E::_MAX and rowVal >= 0)                                                 \
           return (E)rowVal;                                                                        \
         else                                                                                       \
-          throw new std::runtime_error("Incorrect value in DB!");                                  \
+          throw std::runtime_error("Incorrect value for " #E " in DB!");                           \
       }                                                                                            \
       E extract(sqlite3_stmt* stmt, int colIndex) {                                                \
         auto val = sqlite3_column_int(stmt, colIndex);                                             \
@@ -82,6 +83,9 @@ struct WoodType {
   int         id;
   std::string name, desc;
   double      pricePerBF;
+
+  void update();
+  void remove();
 };
 
 struct Component {
@@ -149,15 +153,14 @@ struct DB {
   //
 
   static std::vector<Deck>      get_decks();
-  static std::vector<Component> get_materials();
+  static std::vector<Component> get_components();
   static std::vector<Employee>  get_employees();
   static std::vector<WoodType>  get_woodtypes();
 
-  static std::vector<Component> get_mats_of_kind(const std::string& kind);
-  static std::vector<Component> get_mats_of_type(const std::string& type);
+  static std::vector<Component> get_comps_of_type(ComponentType type);
 
 
-  static Component get_material(int id);
+  static Component get_component(int id);
   static Order     get_order(int id);
   static Deck      get_deck(int id);
   // I've solved unemployment!
@@ -168,15 +171,15 @@ struct DB {
   static void      set_avgprice(ComponentType ty, double price);
   static Deck      new_deck();
   static Employee  new_employee();
-  static Component new_material();
+  static Component new_component();
   static Work      new_work(int empID, int deckID);
   static Order     new_order(int matID, int deckID);
   static WoodType  new_woodtype();
 
-  static auto& get_db() {
+  static auto init_db() {
     using namespace sqlite_orm;
     // clang-format off
-    static auto storage = make_storage("deckest.db",
+    auto storage = make_storage("deckest.db",
       make_table("Deck",
         make_column("id", &Deck::id, autoincrement(), primary_key()),
         make_column("name", &Deck::name),
@@ -226,10 +229,17 @@ struct DB {
       ),
       make_table("CommonComps",
         make_column("type", &CommonComps::type, primary_key()),
-        make_column("avgPricePerUnit", &CommonComps::avgPricePerUnit)
+        make_column("avgPricePerUnit", &CommonComps::avgPricePerUnit, default_value(0.0))
       )
     );
     // clang-format on
+    std::cerr << "Making storage...\n";
+
+    return storage;
+  }
+
+  static auto& get_db() {
+    static auto storage = init_db();
     return storage;
   }
 };
