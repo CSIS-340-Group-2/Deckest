@@ -21,6 +21,13 @@ Employee  DB::get_employee(int id) { return DB::get_db().get<Employee>(id); }
 Order     DB::get_order(int id) { return DB::get_db().get<Order>(id); }
 Work      DB::get_work(int id) { return DB::get_db().get<Work>(id); }
 WoodType  DB::get_woodtype(int id) { return DB::get_db().get<WoodType>(id); }
+double    DB::get_avgprice(ComponentType ty) {
+  return DB::get_db().select(&CommonComps::avgPricePerUnit, where(c(&CommonComps::type) == ty))[0];
+}
+void DB::set_avgprice(ComponentType ty, double price) {
+  DB::get_db().update_all(set(c(&CommonComps::avgPricePerUnit) = price),
+                          where(c(&CommonComps::type) == ty));
+}
 
 std::vector<Component> DB::get_materials() { return DB::get_db().get_all<Component>(); }
 std::vector<Employee>  DB::get_employees() { return DB::get_db().get_all<Employee>(); }
