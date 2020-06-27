@@ -15,6 +15,9 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">Name</property>
+            <attributes>
+              <attribute name="font-desc" value="Sans Bold Oblique 10"/>
+            </attributes>
           </object>
           <packing>
             <property name="left_attach">1</property>
@@ -61,6 +64,9 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">PricePerUnit</property>
+            <attributes>
+              <attribute name="font-desc" value="Sans Bold Oblique 10"/>
+            </attributes>
           </object>
           <packing>
             <property name="left_attach">1</property>
@@ -83,6 +89,9 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">Components</property>
+            <attributes>
+              <attribute name="font-desc" value="Sans Bold Oblique 10"/>
+            </attributes>
           </object>
           <packing>
             <property name="left_attach">0</property>
@@ -94,6 +103,9 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">Wood Types</property>
+            <attributes>
+              <attribute name="font-desc" value="Sans Bold Oblique 10"/>
+            </attributes>
           </object>
           <packing>
             <property name="left_attach">0</property>
@@ -105,6 +117,9 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">Name</property>
+            <attributes>
+              <attribute name="font-desc" value="Sans Bold Oblique 10"/>
+            </attributes>
           </object>
           <packing>
             <property name="left_attach">1</property>
@@ -127,6 +142,9 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">Description</property>
+            <attributes>
+              <attribute name="font-desc" value="Sans Bold Oblique 10"/>
+            </attributes>
           </object>
           <packing>
             <property name="left_attach">1</property>
@@ -149,6 +167,9 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">Price per BoardFt</property>
+            <attributes>
+              <attribute name="font-desc" value="Sans Bold Oblique 10"/>
+            </attributes>
           </object>
           <packing>
             <property name="left_attach">1</property>
@@ -281,6 +302,9 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">Avg Price of Concrete</property>
+            <attributes>
+              <attribute name="font-desc" value="Sans Bold Oblique 10"/>
+            </attributes>
           </object>
           <packing>
             <property name="left_attach">4</property>
@@ -292,6 +316,9 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">Avg Price per Nail</property>
+            <attributes>
+              <attribute name="font-desc" value="Sans Bold Oblique 10"/>
+            </attributes>
           </object>
           <packing>
             <property name="left_attach">4</property>
