@@ -112,7 +112,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkEntry">
+          <object class="GtkEntry" id="nameInputType">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="hexpand">True</property>
@@ -134,7 +134,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkEntry">
+          <object class="GtkEntry" id="descInputType">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="hexpand">True</property>
@@ -156,7 +156,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkEntry">
+          <object class="GtkEntry" id="priceInputType">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="hexpand">True</property>
@@ -179,7 +179,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkButton">
+          <object class="GtkButton" id="delWoodTypes">
             <property name="label" translatable="yes">-</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
@@ -255,7 +255,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkEntry">
+          <object class="GtkEntry" id="avgPriceInputConcrete">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="hexpand">True</property>
@@ -266,7 +266,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkEntry">
+          <object class="GtkEntry" id="avgPriceInputNail">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="hexpand">True</property>
