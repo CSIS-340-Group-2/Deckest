@@ -56,6 +56,17 @@ enum class Size : int {
 };
 BIND_ENUM(Size)
 
+enum class Length : int {
+  Null = 0,
+  Six = 6,
+  Eight = 8,
+  Ten = 10,
+  Twelve = 12,
+
+  _MAX,
+};
+BIND_ENUM(Length)
+
 enum class ComponentType : int {
   Board,
   Nail,
@@ -82,9 +93,7 @@ struct Component {
   std::string name;
 
   // These two are for boards and the like
-
-  /// One of the discrete lengths 6/8/10/12
-  int  length;
+  Length length;
   Size size;
 
   void               update();

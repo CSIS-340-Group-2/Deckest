@@ -77,7 +77,7 @@ Component DB::new_material() {
                              .pricePerUnit = 0,
                              .type         = ComponentType::Misc,
                              .name         = "New Material",
-                             .length       = -1,
+                             .length       = Length::Null,
                              .size         = Size::Null };
 
   return DB::get_material(DB::get_db().insert(newComponent));
