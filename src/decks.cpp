@@ -48,7 +48,7 @@ void create_decks(Gtk::Builder* builder) {
   Gtk::CheckButton *hasRailing, *hasStairs;
   Gtk::ColorButton* deckColor;
   Gtk::Button *     addBtn, *delBtn, *estBtn;
-  Gtk::ComboBox*    angle;
+  Gtk::ComboBox *   angle, *units;
 
   builder->get_widget("addDecks", addBtn);
   builder->get_widget("delDecks", delBtn);
@@ -62,6 +62,14 @@ void create_decks(Gtk::Builder* builder) {
   builder->get_widget("hasStairs", hasStairs);
   builder->get_widget("angle", angle);
   builder->get_widget("estBtn", estBtn);
+  builder->get_widget("unitsCombo", units);
+
+  // Convert into DB
+  // convert(units->get_active_row_number(), Imperial, val);
+  // From DB
+  // convert(Imperial, units->get_active_row_number(), val);
+
+
   // Steps from here:
   // Populate the deckList
   // Setup handlers for the deckList to automatically pull data into the inputs
