@@ -8,6 +8,16 @@
 using namespace std;
 
 
+enum Units { Imperial = 0, Metric = 1 };
+double convert(Units from, Units to, double m) {
+  if (from == to)
+    return m;
+  else if (from == Imperial and to == Metric)
+    return m * 0.3048;
+  else if (from == Metric and to == Imperial)
+    return m * 3.28084;
+}
+
 class DeckCols: public Gtk::ListStore::ColumnRecord {
  public:
   Gtk::TreeModelColumn<std::string> colName;
