@@ -42,6 +42,9 @@ struct DiffCols: public Gtk::ListStore::ColumnRecord {
 };
 
 void create_estimator(Gtk::Builder* builder, int deckID) {
+  Deck deck = DB::get_deck(deckID);
+
+
   static CompCols compCols;
   Gtk::Window*    window;
   builder->get_widget("root", window);
@@ -65,11 +68,11 @@ void create_estimator(Gtk::Builder* builder, int deckID) {
   woodType->set_model(typeModel);
 
   auto update = [=]() {
-    Deck deck = DB::get_deck(deckID);
     estimate(deck);
     auto orders = deck.orders();
     auto type   = DB::get_woodtype(woodType->get_active()->get_value(typeCols.colID));
 
+    model->clear();
     for (auto& order : orders) {
       auto comp              = DB::get_component(order.matID);
       auto row               = *model->append();
@@ -83,6 +86,8 @@ void create_estimator(Gtk::Builder* builder, int deckID) {
     update();
   } catch (std::exception& e) { cerr << "Got exception " << e.what() << endl; }
 
+  woodType->signal_changed().connect([=]() { update(); });
+
   Gtk::Button* diffBtn;
   builder->get_widget("compareBtn", diffBtn);
   diffBtn->signal_clicked().connect([=]() {
@@ -91,7 +96,6 @@ void create_estimator(Gtk::Builder* builder, int deckID) {
     diffBuilder->get_widget("ListOfMaterials", tree);
     static DiffCols diffCols;
     auto            model = Gtk::ListStore::create(diffCols);
-    auto            deck  = DB::get_deck(deckID);
     for (auto type : DB::get_woodtypes()) {
       auto price             = get_cost(type, deck);
       auto row               = *model->append();

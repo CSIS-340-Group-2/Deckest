@@ -51,15 +51,15 @@ std::vector<Component> DB::get_comps_of_type(ComponentType type) {
   return DB::get_db().get_all<Component>(where(is_equal(&Component::type, type)));
 }
 
-std::vector<Order> Component::orders() {
+std::vector<Order> Component::orders() const {
   return DB::get_db().get_all<Order>(where(is_equal(&Order::matID, this->id)));
 }
 
-std::vector<Order> Deck::orders() {
+std::vector<Order> Deck::orders() const {
   return DB::get_db().get_all<Order>(where(is_equal(&Order::deckID, this->id)));
 }
 
-std::vector<Work> Deck::works() {
+std::vector<Work> Deck::works() const {
   return DB::get_db().get_all<Work>(where(is_equal(&Work::deckID, this->id)));
 }
 
@@ -154,12 +154,12 @@ double Component::get_price(WoodType type) {
     double bf = (double)this->length;
     switch (this->size) {
     case Size::S2x4: bf *= (2 * 4) / (12.0 * 12.0); break;
-    case Size::S2x2: (2 * 2) / (12.0 * 12.0); break;
-    case Size::S2x8: (2 * 8) / (12.0 * 12.0); break;
-    case Size::S4x6: (4 * 6) / (12.0 * 12.0); break;
-    case Size::S2x12: (2 * 12) / (12.0 * 12.0); break;
-    case Size::S4x4: (4 * 4) / (12.0 * 12.0); break;
-    case Size::S5_4x6: (5.0 / 4 * 6) / (12.0 * 12.0); break;
+    case Size::S2x2: bf *= (2 * 2) / (12.0 * 12.0); break;
+    case Size::S2x8: bf *= (2 * 8) / (12.0 * 12.0); break;
+    case Size::S4x6: bf *= (4 * 6) / (12.0 * 12.0); break;
+    case Size::S2x12: bf *= (2 * 12) / (12.0 * 12.0); break;
+    case Size::S4x4: bf *= (4 * 4) / (12.0 * 12.0); break;
+    case Size::S5_4x6: bf *= (5.0 / 4 * 6) / (12.0 * 12.0); break;
     default: exit(-2663);
     }
     return bf * type.pricePerBF;

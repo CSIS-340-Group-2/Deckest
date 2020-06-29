@@ -103,7 +103,7 @@ struct Component {
 
   void               update();
   void               remove();
-  std::vector<Order> orders();
+  std::vector<Order> orders() const;
 
   // These two provided because some component types have odd handling
   std::string get_name();
@@ -125,10 +125,10 @@ struct Deck {
   int                angle;
   void               update();
   void               remove();
-  std::vector<Order> orders();
+  std::vector<Order> orders() const;
   void               clear_orders();
   Order              order(const Component& comp, int quant);
-  std::vector<Work>  works();
+  std::vector<Work>  works() const;
 };
 
 struct Work {
