@@ -166,9 +166,15 @@ void estimate(Deck deck) {
 double estimate_time(Deck deck) { return 0.0; }
 
 
-/// @pre deck must exist, estimate(deck) must have been called.
-double get_board_footage(Deck deck) { return 0.0; }
-
 /// Gets all orders associated with deck and sums up their prices
 /// @pre material and deck must exist in DB
-double get_cost(WoodType material, Deck deck) { return 0.0; }
+double get_cost(WoodType material, Deck deck) {
+  double res    = 0.0;
+  auto   orders = deck.orders();
+  for (auto order : orders) {
+    auto comp = DB::get_component(order.matID);
+    res += comp.get_price(material) * order.quantity;
+  }
+
+  return res;
+}
