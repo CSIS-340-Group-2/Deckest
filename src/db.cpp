@@ -17,6 +17,13 @@ void Component::remove() { DB::get_db().remove<Component>(this->id); }
 void Employee::remove() { DB::get_db().remove<Employee>(this->id); }
 void WoodType::remove() { DB::get_db().remove<WoodType>(this->id); }
 
+void  Deck::clear_orders() { DB::get_db().remove_all<Order>(where(c(&Order::deckID) == this->id)); }
+Order Deck::order(const Component& comp, int quant) {
+  DB::get_db().replace(Order{ .deckID = this->id, .matID = comp.id, .quantity = quant });
+  return DB::get_db().get_all<Order>(
+      where(c(&Order::deckID) == this->id && c(&Order::matID) == comp.id))[0];
+}
+
 Component DB::get_component(int id) { return DB::get_db().get<Component>(id); }
 Deck      DB::get_deck(int id) { return DB::get_db().get<Deck>(id); }
 Employee  DB::get_employee(int id) { return DB::get_db().get<Employee>(id); }
@@ -107,4 +114,58 @@ WoodType DB::new_woodtype() {
   WoodType newWoodType
       = { .id = -1, .name = "New WoodType", .desc = "Complete me!", .pricePerBF = 0.0 };
   return DB::get_woodtype(DB::get_db().insert(newWoodType));
+}
+
+std::string Component::get_name() {
+  if (this->name.size() > 0) return this->name;
+  switch (this->type) {
+    // No other way for a misc
+  case ComponentType::Misc: return this->name;
+  case ComponentType::Board: {
+    std::string res = "";
+    switch (this->size) {
+    case Size::Null: res += "NULL"; break;
+    case Size::S2x4: res += "2x4"; break;
+    case Size::S2x2: res += "2x2"; break;
+    case Size::S2x8: res += "2x8"; break;
+    case Size::S4x6: res += "4x6"; break;
+    case Size::S2x12: res += "2x12"; break;
+    case Size::S4x4: res += "4x4"; break;
+    case Size::S5_4x6: res += "5/4x6"; break;
+    default: exit(-2663);
+    }
+    res += "in ";
+    res += std::to_string((int)this->length);  // Length is directly associated with its int
+    res += "ft Wooden Board";
+    return res;
+  }
+  case ComponentType::Nail: return "Nails";
+  case ComponentType::Concrete: return "Concrete";
+  default: exit(-2663);
+  }
+  return "@@@@@";
+}
+// type only needs to be valid if this->type == #Board
+double Component::get_price(WoodType type) {
+  switch (this->type) {
+  case ComponentType::Misc: return this->pricePerUnit;
+  case ComponentType::Board: {
+    // Need to get the board-footage of the board, then mul by type->pricePerBF
+    double bf = (double)this->length;
+    switch (this->size) {
+    case Size::S2x4: bf *= (2 * 4) / (12.0 * 12.0); break;
+    case Size::S2x2: (2 * 2) / (12.0 * 12.0); break;
+    case Size::S2x8: (2 * 8) / (12.0 * 12.0); break;
+    case Size::S4x6: (4 * 6) / (12.0 * 12.0); break;
+    case Size::S2x12: (2 * 12) / (12.0 * 12.0); break;
+    case Size::S4x4: (4 * 4) / (12.0 * 12.0); break;
+    case Size::S5_4x6: (5.0 / 4 * 6) / (12.0 * 12.0); break;
+    default: exit(-2663);
+    }
+    return bf * type.pricePerBF;
+  }
+  case ComponentType::Nail:
+  case ComponentType::Concrete: return DB::get_avgprice(this->type);
+  default: exit(-2663);
+  }
 }

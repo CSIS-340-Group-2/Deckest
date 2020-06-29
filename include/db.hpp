@@ -94,7 +94,7 @@ struct Component {
 
   ComponentType type;
 
-  /// Only needed for misc
+  /// A name = "" means to derive it as needed
   std::string name;
 
   // These two are for boards and the like
@@ -104,6 +104,10 @@ struct Component {
   void               update();
   void               remove();
   std::vector<Order> orders();
+
+  // These two provided because some component types have odd handling
+  std::string get_name();
+  double      get_price(WoodType type);
 };
 
 struct Order {
@@ -122,6 +126,8 @@ struct Deck {
   void               update();
   void               remove();
   std::vector<Order> orders();
+  void               clear_orders();
+  Order              order(const Component& comp, int quant);
   std::vector<Work>  works();
 };
 

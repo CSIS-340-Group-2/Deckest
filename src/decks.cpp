@@ -8,6 +8,16 @@
 using namespace std;
 
 
+enum Units { Imperial = 0, Metric = 1 };
+double convert(Units from, Units to, double m) {
+  if (from == to)
+    return m;
+  else if (from == Imperial and to == Metric)
+    return m * 0.3048;
+  else if (from == Metric and to == Imperial)
+    return m * 3.28084;
+}
+
 class DeckCols: public Gtk::ListStore::ColumnRecord {
  public:
   Gtk::TreeModelColumn<std::string> colName;
@@ -38,7 +48,7 @@ void create_decks(Gtk::Builder* builder) {
   Gtk::CheckButton *hasRailing, *hasStairs;
   Gtk::ColorButton* deckColor;
   Gtk::Button *     addBtn, *delBtn, *estBtn;
-  Gtk::ComboBox*    angle;
+  Gtk::ComboBox *   angle, *units;
 
   builder->get_widget("addDecks", addBtn);
   builder->get_widget("delDecks", delBtn);
@@ -52,6 +62,14 @@ void create_decks(Gtk::Builder* builder) {
   builder->get_widget("hasStairs", hasStairs);
   builder->get_widget("angle", angle);
   builder->get_widget("estBtn", estBtn);
+  builder->get_widget("unitsCombo", units);
+
+  // Convert into DB
+  // convert(units->get_active_row_number(), Imperial, val);
+  // From DB
+  // convert(Imperial, units->get_active_row_number(), val);
+
+
   // Steps from here:
   // Populate the deckList
   // Setup handlers for the deckList to automatically pull data into the inputs
