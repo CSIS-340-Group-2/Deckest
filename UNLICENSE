@@ -1,3 +1,9 @@
+The below license applies to any files created for this project,
+which includes all files in this repository, with the exception
+of include/sqlite_orm/sqlite_orm.h, which is governed by its own
+license in that same folder.
+
+----------------------------------------------------------------------
 This is free and unencumbered software released into the public domain.
 
 Anyone is free to copy, modify, publish, use, compile, sell, or
