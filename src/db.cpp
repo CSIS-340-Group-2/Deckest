@@ -1,5 +1,7 @@
 #include "db.hpp"
 
+#include "util.hpp"
+
 using namespace sqlite_orm;
 
 void Component::update() { DB::get_db().replace(*this); }
@@ -116,6 +118,27 @@ WoodType DB::new_woodtype() {
   return DB::get_woodtype(DB::get_db().insert(newWoodType));
 }
 
+double get_bft(Length length, Size size) {
+  double bf = 0.0;
+  switch (length) {
+  case Length::Baluster: bf = 42.0 / 12.0; break;
+  default: bf = (double)(int)length; break;
+  }
+
+  switch (size) {
+  case Size::S2x4: bf *= (2 * 4) / (12.0 * 12.0); break;
+  case Size::S2x2: bf *= (2 * 2) / (12.0 * 12.0); break;
+  case Size::S2x8: bf *= (2 * 8) / (12.0 * 12.0); break;
+  case Size::S4x6: bf *= (4 * 6) / (12.0 * 12.0); break;
+  case Size::S2x12: bf *= (2 * 12) / (12.0 * 12.0); break;
+  case Size::S4x4: bf *= (4 * 4) / (12.0 * 12.0); break;
+  case Size::S5_4x6: bf *= (5.0 / 4 * 6) / (12.0 * 12.0); break;
+  default: exit(-2663);
+  }
+
+  return bf;
+}
+
 std::string Component::get_name() {
   switch (this->type) {
     // No other way for a misc
@@ -136,9 +159,9 @@ std::string Component::get_name() {
     res += "in ";
     switch (this->length) {
     case Length::Baluster: res += " 42in"; break;
-    default: res += std::to_string((int)this->length); break;
+    default: res += std::to_string((int)this->length) + "ft"; break;
     }
-    res += " Board )";
+    res += " Board ) ( " + double_to_string(get_bft(this->length, this->size)) + "bft )";
     return res;
   }
   case ComponentType::Nail: return this->name + "(Pounds of Nails)";
@@ -147,23 +170,15 @@ std::string Component::get_name() {
   }
   return "@@@@@";
 }
+
+
 // type only needs to be valid if this->type == #Board
 double Component::get_price(WoodType type) {
   switch (this->type) {
   case ComponentType::Misc: return this->pricePerUnit;
   case ComponentType::Board: {
     // Need to get the board-footage of the board, then mul by type->pricePerBF
-    double bf = (double)this->length;
-    switch (this->size) {
-    case Size::S2x4: bf *= (2 * 4) / (12.0 * 12.0); break;
-    case Size::S2x2: bf *= (2 * 2) / (12.0 * 12.0); break;
-    case Size::S2x8: bf *= (2 * 8) / (12.0 * 12.0); break;
-    case Size::S4x6: bf *= (4 * 6) / (12.0 * 12.0); break;
-    case Size::S2x12: bf *= (2 * 12) / (12.0 * 12.0); break;
-    case Size::S4x4: bf *= (4 * 4) / (12.0 * 12.0); break;
-    case Size::S5_4x6: bf *= (5.0 / 4 * 6) / (12.0 * 12.0); break;
-    default: exit(-2663);
-    }
+    auto bf = get_bft(this->length, this->size);
     return bf * type.pricePerBF;
   }
   case ComponentType::Nail:

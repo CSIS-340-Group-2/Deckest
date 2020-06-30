@@ -29,17 +29,17 @@ static int NEXT_ID = 2000000;
 
 // The boards on top of the railings
 const Component RAILS[] = {
-  Component{ NEXT_ID++, 0, ComponentType::Board, "", Length::Six, Size::S2x8 },
-  Component{ NEXT_ID++, 0, ComponentType::Board, "", Length::Eight, Size::S2x8 },
-  Component{ NEXT_ID++, 0, ComponentType::Board, "", Length::Ten, Size::S2x8 },
-  Component{ NEXT_ID++, 0, ComponentType::Board, "", Length::Twelve, Size::S2x8 },
+  Component{ NEXT_ID++, 0, ComponentType::Board, "Railing", Length::Six, Size::S2x8 },
+  Component{ NEXT_ID++, 0, ComponentType::Board, "Railing", Length::Eight, Size::S2x8 },
+  Component{ NEXT_ID++, 0, ComponentType::Board, "Railing", Length::Ten, Size::S2x8 },
+  Component{ NEXT_ID++, 0, ComponentType::Board, "Railing", Length::Twelve, Size::S2x8 },
 };
 
 const Component JOISTS[] = {
-  Component{ NEXT_ID++, 0, ComponentType::Board, "", Length::Six, Size::S2x12 },
-  Component{ NEXT_ID++, 0, ComponentType::Board, "", Length::Eight, Size::S2x12 },
-  Component{ NEXT_ID++, 0, ComponentType::Board, "", Length::Ten, Size::S2x12 },
-  Component{ NEXT_ID++, 0, ComponentType::Board, "", Length::Twelve, Size::S2x12 },
+  Component{ NEXT_ID++, 0, ComponentType::Board, "Joist", Length::Six, Size::S2x12 },
+  Component{ NEXT_ID++, 0, ComponentType::Board, "Joist", Length::Eight, Size::S2x12 },
+  Component{ NEXT_ID++, 0, ComponentType::Board, "Joist", Length::Ten, Size::S2x12 },
+  Component{ NEXT_ID++, 0, ComponentType::Board, "Joist", Length::Twelve, Size::S2x12 },
 };
 
 const Component DECKING_BOARDS[] = {
@@ -50,10 +50,10 @@ const Component DECKING_BOARDS[] = {
 };
 
 const Component POLES[] = {
-  Component{ NEXT_ID++, 0, ComponentType::Board, "", Length::Six, Size::S4x4 },
-  Component{ NEXT_ID++, 0, ComponentType::Board, "", Length::Eight, Size::S4x4 },
-  Component{ NEXT_ID++, 0, ComponentType::Board, "", Length::Ten, Size::S4x4 },
-  Component{ NEXT_ID++, 0, ComponentType::Board, "", Length::Twelve, Size::S4x4 },
+  Component{ NEXT_ID++, 0, ComponentType::Board, "Pole", Length::Six, Size::S4x4 },
+  Component{ NEXT_ID++, 0, ComponentType::Board, "Pole", Length::Eight, Size::S4x4 },
+  Component{ NEXT_ID++, 0, ComponentType::Board, "Pole", Length::Ten, Size::S4x4 },
+  Component{ NEXT_ID++, 0, ComponentType::Board, "Pole", Length::Twelve, Size::S4x4 },
 };
 
 const auto BALUSTER

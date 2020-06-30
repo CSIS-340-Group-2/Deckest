@@ -8,65 +8,128 @@
       <object class="GtkGrid" id="root">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="margin_start">2</property>
+        <property name="margin_end">2</property>
+        <property name="margin_top">2</property>
+        <property name="margin_bottom">2</property>
+        <property name="hexpand">True</property>
+        <property name="vexpand">True</property>
         <property name="orientation">vertical</property>
-        <property name="row_spacing">2</property>
+        <property name="row_spacing">6</property>
+        <property name="column_spacing">6</property>
         <child>
-          <object class="GtkLabel">
+          <object class="GtkGrid" id="woodTypeGrid">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Name</property>
-            <attributes>
-              <attribute name="font-desc" value="Sans Bold Oblique 10"/>
-            </attributes>
-          </object>
-          <packing>
-            <property name="left_attach">1</property>
-            <property name="top_attach">1</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkButton" id="addComponents">
-            <property name="label" translatable="yes">+</property>
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-          </object>
-          <packing>
-            <property name="left_attach">0</property>
-            <property name="top_attach">4</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkButton" id="delComponents">
-            <property name="label" translatable="yes">-</property>
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-          </object>
-          <packing>
-            <property name="left_attach">0</property>
-            <property name="top_attach">5</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkEntry" id="nameInputComp">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="hexpand">True</property>
-          </object>
-          <packing>
-            <property name="left_attach">2</property>
-            <property name="top_attach">1</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="label" translatable="yes">PricePerUnit</property>
-            <attributes>
-              <attribute name="font-desc" value="Sans Bold Oblique 10"/>
-            </attributes>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="nameInputType">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="hexpand">True</property>
+                <property name="input_purpose">number</property>
+              </object>
+              <packing>
+                <property name="left_attach">2</property>
+                <property name="top_attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="descInputType">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="hexpand">True</property>
+                <property name="input_purpose">number</property>
+              </object>
+              <packing>
+                <property name="left_attach">2</property>
+                <property name="top_attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="priceInputType">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="hexpand">True</property>
+                <property name="input_purpose">number</property>
+              </object>
+              <packing>
+                <property name="left_attach">2</property>
+                <property name="top_attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">$</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Description</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans Bold Oblique 10"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Price/Bft</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans Bold Oblique 10"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Name</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans Bold Oblique 10"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">0</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="left_attach">1</property>
@@ -74,24 +137,252 @@
           </packing>
         </child>
         <child>
-          <object class="GtkEntry" id="pricePerUnitInput">
+          <object class="GtkGrid" id="compGrid">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="hexpand">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Name</property>
+                <property name="justify">right</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans Bold Oblique 10"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Price/ea</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans Bold Oblique 10"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">$</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="nameInputComp">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="hexpand">True</property>
+                <property name="vexpand">False</property>
+                <property name="input_purpose">number</property>
+              </object>
+              <packing>
+                <property name="left_attach">2</property>
+                <property name="top_attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="pricePerUnitInput">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="hexpand">True</property>
+                <property name="input_purpose">number</property>
+              </object>
+              <packing>
+                <property name="left_attach">2</property>
+                <property name="top_attach">1</property>
+              </packing>
+            </child>
           </object>
           <packing>
-            <property name="left_attach">2</property>
-            <property name="top_attach">2</property>
+            <property name="left_attach">1</property>
+            <property name="top_attach">0</property>
           </packing>
         </child>
         <child>
-          <object class="GtkLabel">
+          <object class="GtkGrid" id="commonGrid">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Components</property>
-            <attributes>
-              <attribute name="font-desc" value="Sans Bold Oblique 10"/>
-            </attributes>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Price of Concrete/lb</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans Bold Oblique 10"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">$</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="avgPriceInputConcrete">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="hexpand">True</property>
+                <property name="input_purpose">number</property>
+              </object>
+              <packing>
+                <property name="left_attach">2</property>
+                <property name="top_attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Price of Nails/lb</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans Bold Oblique 10"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">$</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="avgPriceInputNail">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="hexpand">True</property>
+                <property name="input_purpose">number</property>
+              </object>
+              <packing>
+                <property name="left_attach">2</property>
+                <property name="top_attach">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="left_attach">2</property>
+            <property name="top_attach">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox" id="compListBox">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Components</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans Bold Oblique 10"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkTreeView" id="componentList">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="tooltip_text" translatable="yes">select a component to edit</property>
+                <property name="hexpand">True</property>
+                <property name="vexpand">True</property>
+                <property name="search_column">0</property>
+                <property name="fixed_height_mode">True</property>
+                <property name="enable_grid_lines">vertical</property>
+                <child internal-child="selection">
+                  <object class="GtkTreeSelection"/>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn">
+                    <property name="sizing">fixed</property>
+                    <property name="title" translatable="yes">Misc Components</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="nameColumn"/>
+                      <attributes>
+                        <attribute name="text">0</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="addComponents">
+                <property name="label" translatable="yes">+</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="delComponents">
+                <property name="label" translatable="yes">-</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">3</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="left_attach">0</property>
@@ -99,357 +390,88 @@
           </packing>
         </child>
         <child>
-          <object class="GtkLabel">
+          <object class="GtkBox" id="typeListBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Wood Types</property>
-            <attributes>
-              <attribute name="font-desc" value="Sans Bold Oblique 10"/>
-            </attributes>
-          </object>
-          <packing>
-            <property name="left_attach">0</property>
-            <property name="top_attach">6</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Name</property>
-            <attributes>
-              <attribute name="font-desc" value="Sans Bold Oblique 10"/>
-            </attributes>
-          </object>
-          <packing>
-            <property name="left_attach">1</property>
-            <property name="top_attach">7</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkEntry" id="nameInputType">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="hexpand">True</property>
-          </object>
-          <packing>
-            <property name="left_attach">2</property>
-            <property name="top_attach">7</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Description</property>
-            <attributes>
-              <attribute name="font-desc" value="Sans Bold Oblique 10"/>
-            </attributes>
-          </object>
-          <packing>
-            <property name="left_attach">1</property>
-            <property name="top_attach">8</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkEntry" id="descInputType">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="hexpand">True</property>
-          </object>
-          <packing>
-            <property name="left_attach">2</property>
-            <property name="top_attach">8</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Price per BoardFt</property>
-            <attributes>
-              <attribute name="font-desc" value="Sans Bold Oblique 10"/>
-            </attributes>
-          </object>
-          <packing>
-            <property name="left_attach">1</property>
-            <property name="top_attach">9</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkEntry" id="priceInputType">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="hexpand">True</property>
-          </object>
-          <packing>
-            <property name="left_attach">2</property>
-            <property name="top_attach">9</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkButton" id="addWoodTypes">
-            <property name="label" translatable="yes">+</property>
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-          </object>
-          <packing>
-            <property name="left_attach">0</property>
-            <property name="top_attach">10</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkButton" id="delWoodTypes">
-            <property name="label" translatable="yes">-</property>
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-          </object>
-          <packing>
-            <property name="left_attach">0</property>
-            <property name="top_attach">11</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkTreeView" id="componentList">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="tooltip_text" translatable="yes">select a component to edit</property>
-            <property name="hexpand">True</property>
-            <property name="vexpand">True</property>
-            <property name="search_column">0</property>
-            <property name="fixed_height_mode">True</property>
-            <property name="enable_grid_lines">vertical</property>
-            <child internal-child="selection">
-              <object class="GtkTreeSelection"/>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Wood Types</property>
+                <attributes>
+                  <attribute name="font-desc" value="Sans Bold Oblique 10"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
             </child>
             <child>
-              <object class="GtkTreeViewColumn">
-                <property name="sizing">fixed</property>
-                <property name="title" translatable="yes">Misc Components</property>
+              <object class="GtkTreeView" id="woodTypeList">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="tooltip_text" translatable="yes">select a wood type to edit</property>
+                <property name="hexpand">True</property>
+                <property name="vexpand">True</property>
+                <property name="search_column">0</property>
+                <property name="fixed_height_mode">True</property>
+                <property name="enable_grid_lines">vertical</property>
+                <child internal-child="selection">
+                  <object class="GtkTreeSelection"/>
+                </child>
                 <child>
-                  <object class="GtkCellRendererText" id="nameColumn"/>
-                  <attributes>
-                    <attribute name="text">0</attribute>
-                  </attributes>
+                  <object class="GtkTreeViewColumn">
+                    <property name="sizing">fixed</property>
+                    <property name="title" translatable="yes">Type</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="typeColumn"/>
+                      <attributes>
+                        <attribute name="text">0</attribute>
+                      </attributes>
+                    </child>
+                  </object>
                 </child>
               </object>
-            </child>
-          </object>
-          <packing>
-            <property name="left_attach">0</property>
-            <property name="top_attach">1</property>
-            <property name="height">3</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkTreeView" id="woodTypeList">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="tooltip_text" translatable="yes">select a wood type to edit</property>
-            <property name="hexpand">True</property>
-            <property name="vexpand">True</property>
-            <property name="search_column">0</property>
-            <property name="fixed_height_mode">True</property>
-            <property name="enable_grid_lines">vertical</property>
-            <child internal-child="selection">
-              <object class="GtkTreeSelection"/>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
             </child>
             <child>
-              <object class="GtkTreeViewColumn">
-                <property name="sizing">fixed</property>
-                <property name="title" translatable="yes">Type</property>
-                <child>
-                  <object class="GtkCellRendererText" id="typeColumn"/>
-                  <attributes>
-                    <attribute name="text">0</attribute>
-                  </attributes>
-                </child>
+              <object class="GtkButton" id="addWoodTypes">
+                <property name="label" translatable="yes">+</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
               </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="delWoodTypes">
+                <property name="label" translatable="yes">-</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">3</property>
+              </packing>
             </child>
           </object>
           <packing>
             <property name="left_attach">0</property>
-            <property name="top_attach">7</property>
-            <property name="height">3</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkEntry" id="avgPriceInputConcrete">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="hexpand">True</property>
-          </object>
-          <packing>
-            <property name="left_attach">5</property>
-            <property name="top_attach">1</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkEntry" id="avgPriceInputNail">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="hexpand">True</property>
-          </object>
-          <packing>
-            <property name="left_attach">5</property>
             <property name="top_attach">2</property>
           </packing>
-        </child>
-        <child>
-          <object class="GtkLabel">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Avg Price of Concrete</property>
-            <attributes>
-              <attribute name="font-desc" value="Sans Bold Oblique 10"/>
-            </attributes>
-          </object>
-          <packing>
-            <property name="left_attach">4</property>
-            <property name="top_attach">1</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Avg Price per Nail</property>
-            <attributes>
-              <attribute name="font-desc" value="Sans Bold Oblique 10"/>
-            </attributes>
-          </object>
-          <packing>
-            <property name="left_attach">4</property>
-            <property name="top_attach">2</property>
-          </packing>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
         </child>
         <child>
           <placeholder/>
