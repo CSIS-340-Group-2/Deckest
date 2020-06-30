@@ -117,12 +117,11 @@ WoodType DB::new_woodtype() {
 }
 
 std::string Component::get_name() {
-  if (this->name.size() > 0) return this->name;
   switch (this->type) {
     // No other way for a misc
   case ComponentType::Misc: return this->name;
   case ComponentType::Board: {
-    std::string res = "";
+    std::string res = this->name + "( ";
     switch (this->size) {
     case Size::Null: res += "NULL"; break;
     case Size::S2x4: res += "2x4"; break;
@@ -135,12 +134,15 @@ std::string Component::get_name() {
     default: exit(-2663);
     }
     res += "in ";
-    res += std::to_string((int)this->length);  // Length is directly associated with its int
-    res += "ft Wooden Board";
+    switch (this->length) {
+    case Length::Baluster: res += " 42in"; break;
+    default: res += std::to_string((int)this->length); break;
+    }
+    res += " Board )";
     return res;
   }
-  case ComponentType::Nail: return "Nails";
-  case ComponentType::Concrete: return "Concrete";
+  case ComponentType::Nail: return this->name + "(Pounds of Nails)";
+  case ComponentType::Concrete: return this->name + "(Pounds of Concrete)";
   default: exit(-2663);
   }
   return "@@@@@";
